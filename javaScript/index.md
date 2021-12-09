@@ -59,3 +59,10 @@ function digital_root(n) {
     return sum >= 10 ? digital_root(sum) : sum;
 }
 ```
+
+#### the better solutions
+```js
+function digital_root(n) {
+  return (n - 1) % 9 + 1;
+}
+```
