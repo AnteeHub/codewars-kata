@@ -47,7 +47,7 @@ Given `n`, take the sum of the digits of `n`. If that value has more than one di
 132189  -->  1 + 3 + 2 + 1 + 8 + 9 = 24  -->  2 + 4 = 6
 493193  -->  4 + 9 + 3 + 1 + 9 + 3 = 29  -->  2 + 9 = 11  -->  1 + 1 = 2
 ```
-#### solutions
+#### solution
 ```js
 function digital_root(n) {
     let sum = 0;
@@ -66,3 +66,21 @@ function digital_root(n) {
   return (n - 1) % 9 + 1;
 }
 ```
+---
+### 3. Who likes it?
+#### description
+
+You probably know the "like" system from Facebook and other pages. People can "like" blog posts, pictures or other items. We want to create the text that should be displayed next to such an item.
+
+Implement the function which takes an array containing the names of people that like an item. It must return the display text as shown in the examples:
+
+``` plain
+[]                                -->  "no one likes this"
+["Peter"]                         -->  "Peter likes this"
+["Jacob", "Alex"]                 -->  "Jacob and Alex like this"
+["Max", "John", "Mark"]           -->  "Max, John and Mark like this"
+["Alex", "Jacob", "Mark", "Max"]  -->  "Alex, Jacob and 2 others like this"
+```
+Note: For `4` or more names, the number in `"and 2 others"` simply increases.
+
+#### solution
