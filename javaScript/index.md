@@ -286,4 +286,29 @@ function digPow(n, p) {
     return powers % n === 0 ? powers / n : -1
 }
 ```
+---
+### 7. Bit Counting
 
+#### description
+
+Write a function that takes an integer as input, and returns the number of bits that are equal to one in the binary representation of that number. You can guarantee that input is non-negative.
+
+##### Example
+The binary representation of `1234` is `10011010010`, so the function should return `5` in this case
+
+#### solution
+```js
+const countBits = function (n) {
+    const res=n.toString(2);
+    console.log(res)
+    return res.split('').reduce((acc, curr) => (curr*1) ? acc + 1 : acc, 0)
+};
+```
+
+#### the better solution
+```js
+countBits = n => n.toString(2).split('0').join('').length;
+```
+
+#### warning
+You can not use `>>` to calculate.(**Big int** problem)
