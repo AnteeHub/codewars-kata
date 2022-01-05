@@ -312,3 +312,92 @@ countBits = n => n.toString(2).split('0').join('').length;
 
 #### warning
 You can not use `>>` to calculate.(**Big int** problem)
+
+---
+### 8. Are they the "same"?
+
+#### description
+Given two arrays `a` and `b` write a function `comp(a, b)` (or `compSame(a, b)` ) that checks whether the two arrays have the "same" elements, with the same multiplicities (the multiplicity of a member is the number of times it appears). "Same" means, here, that the elements in `b` are the elements in `a` squared, regardless of the order.
+
+##### examples
+
+**Valid arrays**
+```js
+a = [121, 144, 19, 161, 19, 144, 19, 11]  
+b = [121, 14641, 20736, 361, 25921, 361, 20736, 361]
+```
+
+`comp(a, b)` returns true because in `b` 121 is the square of 11, 14641 is the square of 121, 20736 the square of 144, 361 the square of 19, 25921 the square of 161, and so on. It gets obvious if we write `b`'s elements in terms of squares:
+
+```js
+a = [121, 144, 19, 161, 19, 144, 19, 11] 
+b = [11*11, 121*121, 144*144, 19*19, 161*161, 19*19, 144*144, 19*19]
+```
+
+**Invalid arrays**
+If, for example, we change the first number to something else, `comp` is not returning true anymore:
+```js
+a = [121, 144, 19, 161, 19, 144, 19, 11]  
+b = [132, 14641, 20736, 361, 25921, 361, 20736, 361]
+```
+`comp(a,b)` returns `false` because in `b` 132 is not the square of any number of `a`.
+
+```js
+a = [121, 144, 19, 161, 19, 144, 19, 11]  
+b = [121, 14641, 20736, 36100, 25921, 361, 20736, 361]
+```
+`comp(a,b)` returns `false` because in `b` 36100 is not the square of any number of `a`.
+
+**Remarks**
+`a` or `b` might be `[] or {}` (all languages except R, Shell).
+`a` or `b` might be `nil` or `null` or `None` or `nothing` (except in C++, Crystal, D, Dart, Elixir, Fortran, F#, Haskell, Nim, OCaml, Pascal, Perl, PowerShell, Prolog, PureScript, R, Racket, Rust, Shell, Swift).
+If `a` or `b` are `nil` (or `null` or `None`, depending on the language), the problem doesn't make sense so return false.
+
+**Note for C**
+The two arrays have the same size `(> 0)` given as parameter in function `comp`.
+
+
+#### tips
+`comp([],[])` should return `true` 
+
+#### solution
+```js
+function comp(array1, array2) {
+    if (!array1 || !array2) {
+        return false
+    }
+    if (array1.length === 0 && array2.length === 0) {
+        return true;
+    }
+    if (array1.length === 0 || array2.length === 0 || (array1.length !== array2.length)) {
+        return false
+    }
+    const aMap = array1.map((i) => i * i)
+    let i = 0, length = aMap.length;
+    for (; i < length; i++) {
+        if (array2.length === 0) {
+            return false;
+        }
+        const pos = array2.indexOf(aMap[i]);
+        if (pos < 0) {
+            return false
+        }
+        else {
+            array2.splice(pos, 1);
+        }
+
+    }
+    return true;
+}
+```
+
+#### the better solution
+```js
+const comp = (array1, array2) => 
+  Array.isArray(array1) &&
+  Array.isArray(array2) &&
+  array1.every(item => {
+    const index = array2.indexOf(Math.pow(item, 2))
+    return index > -1 ? array2.splice(index, 1) : false
+  })
+```
