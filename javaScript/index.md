@@ -211,32 +211,38 @@ function isSquare(n) {
     return Math.sqrt(n) % 1 === 0;
 }
 ```
+
 ---
+
 ### 5. Vowel Count
 
 #### description
+
 Return the number (count) of vowels in the given string.
 
-We will consider `a`, `e`, `i`, `o`, `u` as vowels for this Kata (but not `y`).
+We will consider `a` , `e` , `i` , `o` , `u` as vowels for this Kata (but not `y` ).
 
 The input string will only consist of lower case letters and/or spaces.
 
 #### solution
+
 ```js
 function getCount(str) {
-    const regex=/[aeiou]/g;
-    const matches=str.match(regex)
-    const vowelsCount = matches?matches.length:0;
+    const regex = /[aeiou]/g;
+    const matches = str.match(regex)
+    const vowelsCount = matches ? matches.length : 0;
     return vowelsCount;
 }
 ```
 
 #### the better solution
+
 ```js
-function getCount(str){
-    return (str.match(/[aeiou]/ig)||[]).length;
+function getCount(str) {
+    return (str.match(/[aeiou]/ig) || []).length;
 }
 ```
+
 ---
 
 ### 6. Playing with digits
@@ -244,6 +250,7 @@ function getCount(str){
 #### description
 
 Some numbers have funny properties. For example:
+
 ```plain
 89 --> 8¹ + 9² = 89 * 1
 
@@ -254,22 +261,28 @@ Some numbers have funny properties. For example:
 
 Given a positive integer n written as abcd... (a, b, c, d... being digits) and a positive integer p
 
-we want to find a positive integer `k`, if it exists, such as the sum of the digits of `n` taken to the successive powers of `p` is equal to `k * n`.
+we want to find a positive integer `k` , if it exists, such as the sum of the digits of `n` taken to the successive powers of `p` is equal to `k * n` .
 In other words:
 
 > Is there an integer k such as : (a ^ p + b ^ (p+1) + c ^(p+2) + d ^ (p+3) + ...) = n * k
 
-If it is the case we will return `k`, if not return `-1`.
+If it is the case we will return `k` , if not return `-1` .
 
 Note: `n` and `p` will always be given as strictly positive integers.
+
 ```js
-digPow(89, 1) should return 1 since 8¹ + 9² = 89 = 89 * 1
-digPow(92, 1) should return -1 since there is no k such as 9¹ + 2² equals 92 * k
-digPow(695, 2) should return 2 since 6² + 9³ + 5⁴= 1390 = 695 * 2
-digPow(46288, 3) should return 51 since 4³ + 6⁴+ 2⁵ + 8⁶ + 8⁷ = 2360688 = 46288 * 51
+digPow(89, 1) should
+return 1 since 8¹ + 9² = 89 = 89 * 1
+digPow(92, 1) should
+return -1 since there is no k such as 9¹ + 2² equals 92 * k
+digPow(695, 2) should
+return 2 since 6² + 9³ + 5⁴ = 1390 = 695 * 2
+digPow(46288, 3) should
+return 51 since 4³ + 6⁴ + 2⁵ + 8⁶ + 8⁷ = 2360688 = 46288 * 51
 ```
 
 #### solution
+
 ```js
 function digPow(n, p) {
     const digArr = [];
@@ -286,7 +299,9 @@ function digPow(n, p) {
     return powers % n === 0 ? powers / n : -1
 }
 ```
+
 ---
+
 ### 7. Bit Counting
 
 #### description
@@ -294,73 +309,84 @@ function digPow(n, p) {
 Write a function that takes an integer as input, and returns the number of bits that are equal to one in the binary representation of that number. You can guarantee that input is non-negative.
 
 ##### Example
-The binary representation of `1234` is `10011010010`, so the function should return `5` in this case
+
+The binary representation of `1234` is `10011010010` , so the function should return `5` in this case
 
 #### solution
+
 ```js
-const countBits = function (n) {
-    const res=n.toString(2);
+const countBits = function(n) {
+    const res = n.toString(2);
     console.log(res)
-    return res.split('').reduce((acc, curr) => (curr*1) ? acc + 1 : acc, 0)
+    return res.split('').reduce((acc, curr) => (curr * 1) ? acc + 1 : acc, 0)
 };
 ```
 
 #### the better solution
+
 ```js
 countBits = n => n.toString(2).split('0').join('').length;
 ```
 
 #### warning
+
 You can not use `>>` to calculate.(**Big int** problem)
 
 ---
+
 ### 8. Are they the "same"?
 
 #### description
+
 Given two arrays `a` and `b` write a function `comp(a, b)` (or `compSame(a, b)` ) that checks whether the two arrays have the "same" elements, with the same multiplicities (the multiplicity of a member is the number of times it appears). "Same" means, here, that the elements in `b` are the elements in `a` squared, regardless of the order.
 
 ##### examples
 
 **Valid arrays**
+
 ```js
-a = [121, 144, 19, 161, 19, 144, 19, 11]  
+a = [121, 144, 19, 161, 19, 144, 19, 11]
 b = [121, 14641, 20736, 361, 25921, 361, 20736, 361]
 ```
 
-`comp(a, b)` returns true because in `b` 121 is the square of 11, 14641 is the square of 121, 20736 the square of 144, 361 the square of 19, 25921 the square of 161, and so on. It gets obvious if we write `b`'s elements in terms of squares:
+`comp(a, b)` returns true because in `b` 121 is the square of 11, 14641 is the square of 121, 20736 the square of 144, 361 the square of 19, 25921 the square of 161, and so on. It gets obvious if we write `b` 's elements in terms of squares:
 
 ```js
-a = [121, 144, 19, 161, 19, 144, 19, 11] 
-b = [11*11, 121*121, 144*144, 19*19, 161*161, 19*19, 144*144, 19*19]
+a = [121, 144, 19, 161, 19, 144, 19, 11]
+b = [11 * 11, 121 * 121, 144 * 144, 19 * 19, 161 * 161, 19 * 19, 144 * 144, 19 * 19]
 ```
 
 **Invalid arrays**
 If, for example, we change the first number to something else, `comp` is not returning true anymore:
-```js
-a = [121, 144, 19, 161, 19, 144, 19, 11]  
-b = [132, 14641, 20736, 361, 25921, 361, 20736, 361]
-```
-`comp(a,b)` returns `false` because in `b` 132 is not the square of any number of `a`.
 
 ```js
-a = [121, 144, 19, 161, 19, 144, 19, 11]  
+a = [121, 144, 19, 161, 19, 144, 19, 11]
+b = [132, 14641, 20736, 361, 25921, 361, 20736, 361]
+```
+
+`comp(a,b)` returns `false` because in `b` 132 is not the square of any number of `a` .
+
+```js
+a = [121, 144, 19, 161, 19, 144, 19, 11]
 b = [121, 14641, 20736, 36100, 25921, 361, 20736, 361]
 ```
-`comp(a,b)` returns `false` because in `b` 36100 is not the square of any number of `a`.
+
+`comp(a,b)` returns `false` because in `b` 36100 is not the square of any number of `a` .
 
 **Remarks**
 `a` or `b` might be `[] or {}` (all languages except R, Shell).
 `a` or `b` might be `nil` or `null` or `None` or `nothing` (except in C++, Crystal, D, Dart, Elixir, Fortran, F#, Haskell, Nim, OCaml, Pascal, Perl, PowerShell, Prolog, PureScript, R, Racket, Rust, Shell, Swift).
-If `a` or `b` are `nil` (or `null` or `None`, depending on the language), the problem doesn't make sense so return false.
+If `a` or `b` are `nil` (or `null` or `None` , depending on the language), the problem doesn't make sense so return false.
 
 **Note for C**
-The two arrays have the same size `(> 0)` given as parameter in function `comp`.
-
+The two arrays have the same size `(> 0)` given as parameter in function `comp` .
 
 #### tips
-`comp([],[])` should return `true` 
+
+`comp([],[])` should return `true`
 
 #### solution
+
 ```js
 function comp(array1, array2) {
     if (!array1 || !array2) {
@@ -373,7 +399,8 @@ function comp(array1, array2) {
         return false
     }
     const aMap = array1.map((i) => i * i)
-    let i = 0, length = aMap.length;
+    let i = 0,
+        length = aMap.length;
     for (; i < length; i++) {
         if (array2.length === 0) {
             return false;
@@ -381,8 +408,7 @@ function comp(array1, array2) {
         const pos = array2.indexOf(aMap[i]);
         if (pos < 0) {
             return false
-        }
-        else {
+        } else {
             array2.splice(pos, 1);
         }
 
@@ -392,29 +418,33 @@ function comp(array1, array2) {
 ```
 
 #### the better solution
+
 ```js
-const comp = (array1, array2) => 
-  Array.isArray(array1) &&
-  Array.isArray(array2) &&
-  array1.every(item => {
-    const index = array2.indexOf(Math.pow(item, 2))
-    return index > -1 ? array2.splice(index, 1) : false
-  })
+const comp = (array1, array2) =>
+    Array.isArray(array1) &&
+    Array.isArray(array2) &&
+    array1.every(item => {
+        const index = array2.indexOf(Math.pow(item, 2))
+        return index > -1 ? array2.splice(index, 1) : false
+    })
 ```
+
 ---
+
 ### 8. First non-repeating character
 
 #### description
+
 Write a function named `first_non_repeating_letter` that takes a string input, and returns the first character that is not repeated anywhere in the string.
 
-For example, if given the input `'stress'`, the function should return `'t'`, since the letter t only occurs once in the string, and occurs first in the string.
+For example, if given the input `'stress'` , the function should return `'t'` , since the letter t only occurs once in the string, and occurs first in the string.
 
-As an added challenge, **upper-** and **lowercase** letters are considered the same character, but the function should return the correct case for the initial letter. For example, the input `'sTreSS'` should return `'T'`.
+As an added challenge, **upper-** and **lowercase** letters are considered the same character, but the function should return the correct case for the initial letter. For example, the input `'sTreSS'` should return `'T'` .
 
-If a string contains all repeating characters, it should return an empty string (`""`) or `None` -- see sample tests.
-
+If a string contains all repeating characters, it should return an empty string ( `""` ) or `None` -- see sample tests.
 
 #### solutions
+
 ```js
 function firstNonRepeatingLetter(s) {
     const str = s.toLowerCase();
@@ -429,16 +459,19 @@ function firstNonRepeatingLetter(s) {
     return ''
 }
 ```
+
 ---
+
 ### 9. Take a Ten Minute Walk
 
 #### description
 
-You live in the city of Cartesia where all roads are laid out in a perfect grid. You arrived ten minutes too early to an appointment, so you decided to take the opportunity to go for a short walk. The city provides its citizens with a Walk Generating App on their phones -- everytime you press the button it sends you an array of one-letter strings representing directions to walk (eg. `['n', 's', 'w'¸, 'e']`). You always walk only a single block for each letter (direction) and you know it takes you one minute to traverse one city block, so create a function that will return true if the walk the app gives you will take you exactly ten minutes (you don't want to be early or late!) and will, of course, return you to your starting point. Return false otherwise.
+You live in the city of Cartesia where all roads are laid out in a perfect grid. You arrived ten minutes too early to an appointment, so you decided to take the opportunity to go for a short walk. The city provides its citizens with a Walk Generating App on their phones -- everytime you press the button it sends you an array of one-letter strings representing directions to walk (eg. `['n', 's', 'w'¸, 'e']` ). You always walk only a single block for each letter (direction) and you know it takes you one minute to traverse one city block, so create a function that will return true if the walk the app gives you will take you exactly ten minutes (you don't want to be early or late!) and will, of course, return you to your starting point. Return false otherwise.
 
 > Note: you will always receive a valid array containing a random assortment of direction letters ('n', 's', 'e', or 'w' only). It will never give you an empty array (that's not a walk, that's standing still!).
 
 #### solution
+
 ```js
 function isValidWalk(walk) {
     if (walk && walk.length !== 10)
@@ -465,6 +498,49 @@ function isValidWalk(walk) {
         }
     })
     return distance + Math.abs(horizontal) + Math.abs(vertical) === MATCH_DISTANCE;
+}
+```
+
+---
+
+### 10. Delete occurrences of an element if it occurs more than n times
+
+#### description
+
+##### Enough is enough!
+
+Alice and Bob were on a holiday. Both of them took many pictures of the places they've been, and now they want to show Charlie their entire collection. However, Charlie doesn't like these sessions, since the motive usually repeats. He isn't fond of seeing the Eiffel tower 40 times. He tells them that he will only sit during the session if they show the same motive at most N times. Luckily, Alice and Bob are able to encode the motive as a number. Can you help them to remove numbers such that their list contains each number only up to N times, without changing the order?
+
+##### Task
+
+Given a list lst and a number N, create a new list that contains each number of lst at most N times without reordering. For example if N = 2, and the input is `[1,2,3,1,2,1,2,3]` , you take `[1,2,3,1,2]` , drop the next `[1,2]` since this would lead to 1 and 2 being in the result 3 times, and then take 3, which leads to `[1,2,3,1,2,3]` .
+
+##### Example
+
+```js
+deleteNth([1, 1, 1, 1], 2) // return [1,1]
+deleteNth([20, 37, 20, 21], 1) // return [20,37,21]
+```
+
+#### solution
+
+```js
+function deleteNth(arr, n) {
+    let countMap = new Map();
+    return arr.filter((item) => {
+        const count = countMap.get(item) || 0;
+        countMap.set(item, count ? count + 1 : 1); // make sure count >= 1
+        return count < n; // 'count' changed after got the value of Map.get(item)
+    })
+}
+```
+
+#### the better solution
+
+```js
+function deleteNth(a, x) {
+    let m = {}; // no using Map()
+    return a.filter(v => (m[v] = m[v] + 1 || 1) <= x);
 }
 ```
 ---
