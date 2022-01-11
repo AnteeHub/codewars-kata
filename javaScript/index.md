@@ -85,6 +85,9 @@ function digital_root(n) {
 
 ### 3. Who likes it?
 
+#### link 
+[https://www.codewars.com/kata/5266876b8f4bf2da9b000362](https://www.codewars.com/kata/5266876b8f4bf2da9b000362)
+
 #### description
 
 You probably know the "like" system from Facebook and other pages. People can "like" blog posts, pictures or other items. We want to create the text that should be displayed next to such an item.
@@ -169,9 +172,14 @@ FeelingsParty.prototype.findTheRightWords = function() {
 
 ---
 
-### 4. A square of squares
+### 4. You're a square!
+
+#### link
+ [https://www.codewars.com/kata/54c27a33fb7da0db0100040e](https://www.codewars.com/kata/54c27a33fb7da0db0100040e)
 
 #### description
+
+##### A square of squares
 
 You like building blocks. You especially like building blocks that are squares. And what you even like more, is to arrange them into a square of square building blocks!
 
@@ -216,6 +224,9 @@ function isSquare(n) {
 
 ### 5. Vowel Count
 
+#### link 
+[https://www.codewars.com/kata/54ff3102c1bad923760001f3](https://www.codewars.com/kata/54ff3102c1bad923760001f3)
+
 #### description
 
 Return the number (count) of vowels in the given string.
@@ -246,6 +257,9 @@ function getCount(str) {
 ---
 
 ### 6. Playing with digits
+
+#### link 
+[https://www.codewars.com/kata/5552101f47fc5178b1000050](https://www.codewars.com/kata/5552101f47fc5178b1000050)
 
 #### description
 
@@ -304,6 +318,9 @@ function digPow(n, p) {
 
 ### 7. Bit Counting
 
+#### link 
+[https://www.codewars.com/kata/526571aae218b8ee490006f4](https://www.codewars.com/kata/526571aae218b8ee490006f4)
+
 #### description
 
 Write a function that takes an integer as input, and returns the number of bits that are equal to one in the binary representation of that number. You can guarantee that input is non-negative.
@@ -335,6 +352,9 @@ You can not use `>>` to calculate.(**Big int** problem)
 ---
 
 ### 8. Are they the "same"?
+
+#### link 
+[https://www.codewars.com/kata/550498447451fbbd7600041c](https://www.codewars.com/kata/550498447451fbbd7600041c)
 
 #### description
 
@@ -431,7 +451,10 @@ const comp = (array1, array2) =>
 
 ---
 
-### 8. First non-repeating character
+### 9. First non-repeating character
+
+#### link
+[https://www.codewars.com/kata/52bc74d4ac05d0945d00054e](https://www.codewars.com/kata/52bc74d4ac05d0945d00054e)
 
 #### description
 
@@ -462,7 +485,10 @@ function firstNonRepeatingLetter(s) {
 
 ---
 
-### 9. Take a Ten Minute Walk
+### 10. Take a Ten Minute Walk
+
+#### link
+[https://www.codewars.com/kata/54da539698b8a2ad76000228](https://www.codewars.com/kata/54da539698b8a2ad76000228)
 
 #### description
 
@@ -503,7 +529,12 @@ function isValidWalk(walk) {
 
 ---
 
-### 10. Delete occurrences of an element if it occurs more than n times
+### 11. Delete occurrences of an element if it occurs more than n times
+
+
+#### link
+[https://www.codewars.com/kata/554ca54ffa7d91b236000023](https://www.codewars.com/kata/554ca54ffa7d91b236000023)
+
 
 #### description
 
