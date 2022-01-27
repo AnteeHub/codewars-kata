@@ -10,7 +10,7 @@
 
 [https://www.codewars.com/kata/523f5d21c841566fde000009](https://www.codewars.com/kata/523f5d21c841566fde000009)
 
-#### description
+#### instructions
 
 Your goal in this kata is to implement a difference function, which subtracts one list from another and returns the result.
 
@@ -89,7 +89,7 @@ function digital_root(n) {
 
 [https://www.codewars.com/kata/5266876b8f4bf2da9b000362](https://www.codewars.com/kata/5266876b8f4bf2da9b000362)
 
-#### description
+#### instructions
 
 You probably know the "like" system from Facebook and other pages. People can "like" blog posts, pictures or other items. We want to create the text that should be displayed next to such an item.
 
@@ -179,7 +179,7 @@ FeelingsParty.prototype.findTheRightWords = function() {
 
  [https://www.codewars.com/kata/54c27a33fb7da0db0100040e](https://www.codewars.com/kata/54c27a33fb7da0db0100040e)
 
-#### description
+#### instructions
 
 ##### A square of squares
 
@@ -230,7 +230,7 @@ function isSquare(n) {
 
 [https://www.codewars.com/kata/54ff3102c1bad923760001f3](https://www.codewars.com/kata/54ff3102c1bad923760001f3)
 
-#### description
+#### instructions
 
 Return the number (count) of vowels in the given string.
 
@@ -265,7 +265,7 @@ function getCount(str) {
 
 [https://www.codewars.com/kata/5552101f47fc5178b1000050](https://www.codewars.com/kata/5552101f47fc5178b1000050)
 
-#### description
+#### instructions
 
 Some numbers have funny properties. For example:
 
@@ -326,7 +326,7 @@ function digPow(n, p) {
 
 [https://www.codewars.com/kata/526571aae218b8ee490006f4](https://www.codewars.com/kata/526571aae218b8ee490006f4)
 
-#### description
+#### instructions
 
 Write a function that takes an integer as input, and returns the number of bits that are equal to one in the binary representation of that number. You can guarantee that input is non-negative.
 
@@ -362,7 +362,7 @@ You can not use `>>` to calculate.(**Big int** problem)
 
 [https://www.codewars.com/kata/550498447451fbbd7600041c](https://www.codewars.com/kata/550498447451fbbd7600041c)
 
-#### description
+#### instructions
 
 Given two arrays `a` and `b` write a function `comp(a, b)` (or `compSame(a, b)` ) that checks whether the two arrays have the "same" elements, with the same multiplicities (the multiplicity of a member is the number of times it appears). "Same" means, here, that the elements in `b` are the elements in `a` squared, regardless of the order.
 
@@ -463,7 +463,7 @@ const comp = (array1, array2) =>
 
 [https://www.codewars.com/kata/52bc74d4ac05d0945d00054e](https://www.codewars.com/kata/52bc74d4ac05d0945d00054e)
 
-#### description
+#### instructions
 
 Write a function named `first_non_repeating_letter` that takes a string input, and returns the first character that is not repeated anywhere in the string.
 
@@ -498,7 +498,7 @@ function firstNonRepeatingLetter(s) {
 
 [https://www.codewars.com/kata/54da539698b8a2ad76000228](https://www.codewars.com/kata/54da539698b8a2ad76000228)
 
-#### description
+#### instructions
 
 You live in the city of Cartesia where all roads are laid out in a perfect grid. You arrived ten minutes too early to an appointment, so you decided to take the opportunity to go for a short walk. The city provides its citizens with a Walk Generating App on their phones -- everytime you press the button it sends you an array of one-letter strings representing directions to walk (eg. `['n', 's', 'w'¸, 'e']` ). You always walk only a single block for each letter (direction) and you know it takes you one minute to traverse one city block, so create a function that will return true if the walk the app gives you will take you exactly ten minutes (you don't want to be early or late!) and will, of course, return you to your starting point. Return false otherwise.
 
@@ -543,7 +543,7 @@ function isValidWalk(walk) {
 
 [https://www.codewars.com/kata/554ca54ffa7d91b236000023](https://www.codewars.com/kata/554ca54ffa7d91b236000023)
 
-#### description
+#### instructions
 
 ##### Enough is enough!
 
@@ -590,7 +590,7 @@ function deleteNth(a, x) {
 
 [https://www.codewars.com/kata/515bb423de843ea99400000a/train/javascript](https://www.codewars.com/kata/515bb423de843ea99400000a/train/javascript)
 
-#### description
+#### instructions
 
 For this exercise you will be strengthening your page-fu mastery. You will complete the PaginationHelper class, which is a utility class helpful for querying paging information related to an array.
 
@@ -661,3 +661,104 @@ PaginationHelper.prototype.pageIndex = function (itemIndex) {
 }
 ```
 ---
+
+### 13. Most frequently used words in a text
+
+#### link
+[https://www.codewars.com/kata/51e056fe544cf36c410000fb/train/javascript](https://www.codewars.com/kata/51e056fe544cf36c410000fb/train/javascript)
+
+#### instructions
+
+Write a function that, given a string of text (possibly with punctuation and line-breaks), returns an array of the top-3 most occurring words, in descending order of the number of occurrences.
+
+##### Assumptions
+- A word is a string of letters (A to Z) optionally containing one or more apostrophes (`'`) in ASCII.
+- Apostrophes can appear at the start, middle or end of a word (`'abc`, `abc'`, `'abc'`, `ab'c` are all valid)
+- Any other characters (e.g. `#`, `\`, `/` , `.` ...) are not part of a word and should be treated as whitespace.
+- Matches should be case-insensitive, and the words in the result should be lowercased.
+- Ties may be broken arbitrarily.
+- If a text contains fewer than three unique words, then either the top-2 or top-1 words should be returned, or an empty array if a text contains no words.
+
+##### Examples
+```python
+top_3_words("In a village of La Mancha, the name of which I have no desire to call to
+mind, there lived not long since one of those gentlemen that keep a lance
+in the lance-rack, an old buckler, a lean hack, and a greyhound for
+coursing. An olla of rather more beef than mutton, a salad on most
+nights, scraps on Saturdays, lentils on Fridays, and a pigeon or so extra
+on Sundays, made away with three-quarters of his income.")
+# => ["a", "of", "on"]
+
+top_3_words("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e")
+# => ["e", "ddd", "aa"]
+
+top_3_words("  //wont won't won't")
+# => ["won't", "wont"]
+```
+
+##### Bonus points (not really, but just for fun)
+1. Avoid creating an array whose memory footprint is roughly as big as the input text.
+2. Avoid sorting the entire array of unique words.
+
+#### solution
+```js
+function topThreeWords(text) {
+    const arr = text.toLowerCase().match( /(?!')[a-z']+/gi)||[];
+    const map = arr.reduce((map, item) => {
+        return map.set(item, (map.get(item) || 0) + 1)
+    }, new Map())
+    return [...map].sort((a, b) => b[1] - a[1]).slice(0,3).map(i => i[0].toLowerCase());
+}
+```
+---
+
+
+
+Roman Numerals Encoder
+
+#### instructions
+
+Create a function taking a positive integer as its parameter and returning a string containing the Roman Numeral representation of that integer.
+
+Modern Roman numerals are written by expressing each digit separately starting with the left most digit and skipping any digit with a value of zero. In Roman numerals 1990 is rendered: `1000=M, 900=CM, 90=XC` ; resulting in `MCMXC` . 2008 is written as `2000=MM, 8=VIII` ; or `MMVIII` . 1666 uses each Roman symbol in descending order: `MDCLXVI` .
+
+Example:
+
+```js
+solution(1000); // should return 'M'
+```
+
+Help:
+
+```plain
+Symbol    Value
+I          1
+V          5
+X          10
+L          50
+C          100
+D          500
+M          1,000
+```
+
+Remember that there can't be more than 3 identical symbols in a row.
+
+More about roman numerals - [http://en.wikipedia.org/wiki/Roman_numerals](http://en.wikipedia.org/wiki/Roman_numerals)
+
+#### solution
+
+```js
+function solution(number) {}
+```
+
+  转换  	  为罗马数字  	  罗马数字至今  	  仍存在  
+1808
+1000	M	M	808
+500	D	MD	308
+100	C	MDC	208
+100	C	MDCC	108
+100	C	MDCCC	8
+5	V	MDCCCV	3
+1	I	MDCCCVI	2
+1	I	MDCCCVII	1
+1	I	MDCCCVIII	0
