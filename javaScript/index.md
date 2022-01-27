@@ -86,6 +86,7 @@ function digital_root(n) {
 ### 3. Who likes it?
 
 #### link 
+
 [https://www.codewars.com/kata/5266876b8f4bf2da9b000362](https://www.codewars.com/kata/5266876b8f4bf2da9b000362)
 
 #### description
@@ -175,6 +176,7 @@ FeelingsParty.prototype.findTheRightWords = function() {
 ### 4. You're a square!
 
 #### link
+
  [https://www.codewars.com/kata/54c27a33fb7da0db0100040e](https://www.codewars.com/kata/54c27a33fb7da0db0100040e)
 
 #### description
@@ -225,6 +227,7 @@ function isSquare(n) {
 ### 5. Vowel Count
 
 #### link 
+
 [https://www.codewars.com/kata/54ff3102c1bad923760001f3](https://www.codewars.com/kata/54ff3102c1bad923760001f3)
 
 #### description
@@ -259,6 +262,7 @@ function getCount(str) {
 ### 6. Playing with digits
 
 #### link 
+
 [https://www.codewars.com/kata/5552101f47fc5178b1000050](https://www.codewars.com/kata/5552101f47fc5178b1000050)
 
 #### description
@@ -319,6 +323,7 @@ function digPow(n, p) {
 ### 7. Bit Counting
 
 #### link 
+
 [https://www.codewars.com/kata/526571aae218b8ee490006f4](https://www.codewars.com/kata/526571aae218b8ee490006f4)
 
 #### description
@@ -354,6 +359,7 @@ You can not use `>>` to calculate.(**Big int** problem)
 ### 8. Are they the "same"?
 
 #### link 
+
 [https://www.codewars.com/kata/550498447451fbbd7600041c](https://www.codewars.com/kata/550498447451fbbd7600041c)
 
 #### description
@@ -454,6 +460,7 @@ const comp = (array1, array2) =>
 ### 9. First non-repeating character
 
 #### link
+
 [https://www.codewars.com/kata/52bc74d4ac05d0945d00054e](https://www.codewars.com/kata/52bc74d4ac05d0945d00054e)
 
 #### description
@@ -488,6 +495,7 @@ function firstNonRepeatingLetter(s) {
 ### 10. Take a Ten Minute Walk
 
 #### link
+
 [https://www.codewars.com/kata/54da539698b8a2ad76000228](https://www.codewars.com/kata/54da539698b8a2ad76000228)
 
 #### description
@@ -531,10 +539,9 @@ function isValidWalk(walk) {
 
 ### 11. Delete occurrences of an element if it occurs more than n times
 
-
 #### link
-[https://www.codewars.com/kata/554ca54ffa7d91b236000023](https://www.codewars.com/kata/554ca54ffa7d91b236000023)
 
+[https://www.codewars.com/kata/554ca54ffa7d91b236000023](https://www.codewars.com/kata/554ca54ffa7d91b236000023)
 
 #### description
 
@@ -572,6 +579,85 @@ function deleteNth(arr, n) {
 function deleteNth(a, x) {
     let m = {}; // no using Map()
     return a.filter(v => (m[v] = m[v] + 1 || 1) <= x);
+}
+```
+
+---
+
+### 12. PaginationHelper
+
+#### link
+
+[https://www.codewars.com/kata/515bb423de843ea99400000a/train/javascript](https://www.codewars.com/kata/515bb423de843ea99400000a/train/javascript)
+
+#### description
+
+For this exercise you will be strengthening your page-fu mastery. You will complete the PaginationHelper class, which is a utility class helpful for querying paging information related to an array.
+
+The class is designed to take in an array of values and an integer indicating how many items will be allowed per each page. The types of values contained within the collection/array are not relevant.
+
+The following are some examples of how this class is used:
+
+```js
+var helper = new PaginationHelper(['a', 'b', 'c', 'd', 'e', 'f'], 4);
+helper.pageCount(); //should == 2
+helper.itemCount(); //should == 6
+helper.pageItemCount(0); //should == 4
+helper.pageItemCount(1); // last page - should == 2
+helper.pageItemCount(2); // should == -1 since the page is invalid
+
+// pageIndex takes an item index and returns the page that it belongs on
+helper.pageIndex(5); //should == 1 (zero based index)
+helper.pageIndex(2); //should == 0
+helper.pageIndex(20); //should == -1
+helper.pageIndex(-10); //should == -1
+```
+
+#### solution
+
+```js
+// TODO: complete this object/class
+
+// The constructor takes in an array of items and a integer indicating how many
+// items fit within a single page
+function PaginationHelper(collection, itemsPerPage) {
+    this.collection = collection || [];
+    this.itemsPerPage = itemsPerPage;
+}
+
+// returns the number of items within the entire collection
+PaginationHelper.prototype.itemCount = function () {
+    return this.collection.length;
+}
+
+// returns the number of pages
+PaginationHelper.prototype.pageCount = function () {
+    return Math.ceil(this.collection.length / this.itemsPerPage);
+}
+
+// returns the number of items on the current page. page_index is zero based.
+// this method should return -1 for pageIndex values that are out of range
+PaginationHelper.prototype.pageItemCount = function (pageIndex) {
+    if (this.collection.length === 0) {
+        return 0;
+    }
+    const rest = this.collection.length - (this.itemsPerPage * pageIndex);
+    if (rest < 0)
+        return -1;
+    return rest > this.itemsPerPage ? this.itemsPerPage : rest;
+}
+
+// determines what page an item is on. Zero based indexes
+// this method should return -1 for itemIndex values that are out of range
+PaginationHelper.prototype.pageIndex = function (itemIndex) {
+    if (itemIndex > this.collection.length || itemIndex < 0 || itemIndex === undefined || this.collection.length === 0)
+        return -1;
+    const perPage = isNaN(this.itemsPerPage) ? this.collection.length : this.itemsPerPage;
+    const indexBase = Math.ceil(itemIndex / perPage);
+    if (indexBase === 0) {
+        return 0;
+    }
+    return indexBase - 1;
 }
 ```
 ---
