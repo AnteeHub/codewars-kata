@@ -626,18 +626,18 @@ function PaginationHelper(collection, itemsPerPage) {
 }
 
 // returns the number of items within the entire collection
-PaginationHelper.prototype.itemCount = function () {
+PaginationHelper.prototype.itemCount = function() {
     return this.collection.length;
 }
 
 // returns the number of pages
-PaginationHelper.prototype.pageCount = function () {
+PaginationHelper.prototype.pageCount = function() {
     return Math.ceil(this.collection.length / this.itemsPerPage);
 }
 
 // returns the number of items on the current page. page_index is zero based.
 // this method should return -1 for pageIndex values that are out of range
-PaginationHelper.prototype.pageItemCount = function (pageIndex) {
+PaginationHelper.prototype.pageItemCount = function(pageIndex) {
     if (this.collection.length === 0) {
         return 0;
     }
@@ -649,7 +649,7 @@ PaginationHelper.prototype.pageItemCount = function (pageIndex) {
 
 // determines what page an item is on. Zero based indexes
 // this method should return -1 for itemIndex values that are out of range
-PaginationHelper.prototype.pageIndex = function (itemIndex) {
+PaginationHelper.prototype.pageIndex = function(itemIndex) {
     if (itemIndex > this.collection.length || itemIndex < 0 || itemIndex === undefined || this.collection.length === 0)
         return -1;
     const perPage = isNaN(this.itemsPerPage) ? this.collection.length : this.itemsPerPage;
@@ -660,11 +660,13 @@ PaginationHelper.prototype.pageIndex = function (itemIndex) {
     return indexBase - 1;
 }
 ```
+
 ---
 
 ### 13. Most frequently used words in a text
 
 #### link
+
 [https://www.codewars.com/kata/51e056fe544cf36c410000fb/train/javascript](https://www.codewars.com/kata/51e056fe544cf36c410000fb/train/javascript)
 
 #### instructions
@@ -672,14 +674,16 @@ PaginationHelper.prototype.pageIndex = function (itemIndex) {
 Write a function that, given a string of text (possibly with punctuation and line-breaks), returns an array of the top-3 most occurring words, in descending order of the number of occurrences.
 
 ##### Assumptions
-- A word is a string of letters (A to Z) optionally containing one or more apostrophes (`'`) in ASCII.
-- Apostrophes can appear at the start, middle or end of a word (`'abc`, `abc'`, `'abc'`, `ab'c` are all valid)
-- Any other characters (e.g. `#`, `\`, `/` , `.` ...) are not part of a word and should be treated as whitespace.
-- Matches should be case-insensitive, and the words in the result should be lowercased.
-- Ties may be broken arbitrarily.
-- If a text contains fewer than three unique words, then either the top-2 or top-1 words should be returned, or an empty array if a text contains no words.
+
+* A word is a string of letters (A to Z) optionally containing one or more apostrophes (`'`) in ASCII.
+* Apostrophes can appear at the start, middle or end of a word (`'abc`,  `abc'`,  `'abc'`,  `ab'c` are all valid)
+* Any other characters (e.g. `#`,  `\`,  `/` ,  `.` ...) are not part of a word and should be treated as whitespace.
+* Matches should be case-insensitive, and the words in the result should be lowercased.
+* Ties may be broken arbitrarily.
+* If a text contains fewer than three unique words, then either the top-2 or top-1 words should be returned, or an empty array if a text contains no words.
 
 ##### Examples
+
 ```python
 top_3_words("In a village of La Mancha, the name of which I have no desire to call to
 mind, there lived not long since one of those gentlemen that keep a lance
@@ -697,68 +701,75 @@ top_3_words("  //wont won't won't")
 ```
 
 ##### Bonus points (not really, but just for fun)
+
 1. Avoid creating an array whose memory footprint is roughly as big as the input text.
 2. Avoid sorting the entire array of unique words.
 
 #### solution
+
 ```js
 function topThreeWords(text) {
-    const arr = text.toLowerCase().match( /(?!')[a-z']+/gi)||[];
+    const arr = text.toLowerCase().match(/(?!')[a-z']+/gi) || [];
     const map = arr.reduce((map, item) => {
         return map.set(item, (map.get(item) || 0) + 1)
     }, new Map())
-    return [...map].sort((a, b) => b[1] - a[1]).slice(0,3).map(i => i[0].toLowerCase());
+    return [...map].sort((a, b) => b[1] - a[1]).slice(0, 3).map(i => i[0].toLowerCase());
 }
 ```
+
 ---
 
+### 14. Where my anagrams at?
 
+#### link 
 
-Roman Numerals Encoder
+[https://www.codewars.com/kata/523a86aa4230ebb5420001e1/train/javascript](https://www.codewars.com/kata/523a86aa4230ebb5420001e1/train/javascript)
 
 #### instructions
 
-Create a function taking a positive integer as its parameter and returning a string containing the Roman Numeral representation of that integer.
-
-Modern Roman numerals are written by expressing each digit separately starting with the left most digit and skipping any digit with a value of zero. In Roman numerals 1990 is rendered: `1000=M, 900=CM, 90=XC` ; resulting in `MCMXC` . 2008 is written as `2000=MM, 8=VIII` ; or `MMVIII` . 1666 uses each Roman symbol in descending order: `MDCLXVI` .
-
-Example:
+What is an anagram? Well, two words are anagrams of each other if they both contain the same letters. For example:
 
 ```js
-solution(1000); // should return 'M'
+'abba' & 'baab' == true
+
+    'abba' & 'bbaa' == true
+
+'abba' & 'abbba' == false
+
+    'abba' & 'abca' == false
 ```
 
-Help:
-
-```plain
-Symbol    Value
-I          1
-V          5
-X          10
-L          50
-C          100
-D          500
-M          1,000
-```
-
-Remember that there can't be more than 3 identical symbols in a row.
-
-More about roman numerals - [http://en.wikipedia.org/wiki/Roman_numerals](http://en.wikipedia.org/wiki/Roman_numerals)
-
-#### solution
+Write a function that will find all the anagrams of a word from a list. You will be given two inputs a word and an array with words. You should return an array of all the anagrams or an empty array if there are none. For example:
 
 ```js
-function solution(number) {}
+anagrams('abba', ['aabb', 'abcd', 'bbaa', 'dada']) => ['aabb', 'bbaa']
+
+anagrams('racer', ['crazer', 'carer', 'racar', 'caers', 'racer']) => ['carer', 'racer']
+
+anagrams('laser', ['lazing', 'lazy', 'lacer']) => []
 ```
 
-  转换  	  为罗马数字  	  罗马数字至今  	  仍存在  
-1808
-1000	M	M	808
-500	D	MD	308
-100	C	MDC	208
-100	C	MDCC	108
-100	C	MDCCC	8
-5	V	MDCCCV	3
-1	I	MDCCCVI	2
-1	I	MDCCCVII	1
-1	I	MDCCCVIII	0
+##### Note for Go
+
+For Go: Empty string slice is expected when there are no anagrams found.
+
+##### solution
+```js
+function anagrams(word, words) {
+    const reversal = word.split('').sort((a, b) => (a.charCodeAt()-b.charCodeAt())).join('');
+    const res=[]
+    words.forEach((i) => {
+        const match = i.split('').sort((a, b) => (a.charCodeAt()-b.charCodeAt())).join('')
+        match === reversal && res.push(i)
+    })
+    return res
+}
+```
+
+##### the better solution
+```js
+function anagrams(a, b) {
+  return b.filter(w=>''+[...a].sort()===''+[...w].sort());
+}
+```
+---
