@@ -676,8 +676,8 @@ Write a function that, given a string of text (possibly with punctuation and lin
 ##### Assumptions
 
 * A word is a string of letters (A to Z) optionally containing one or more apostrophes (`'`) in ASCII.
-* Apostrophes can appear at the start, middle or end of a word (`'abc`,  `abc'`,  `'abc'`,  `ab'c` are all valid)
-* Any other characters (e.g. `#`,  `\`,  `/` ,  `.` ...) are not part of a word and should be treated as whitespace.
+* Apostrophes can appear at the start, middle or end of a word (`'abc`,   `abc'`,   `'abc'`,  `ab'c` are all valid)
+* Any other characters (e.g. `#`,   `\`,  `/` ,  `.` ...) are not part of a word and should be treated as whitespace.
 * Matches should be case-insensitive, and the words in the result should be lowercased.
 * Ties may be broken arbitrarily.
 * If a text contains fewer than three unique words, then either the top-2 or top-1 words should be returned, or an empty array if a text contains no words.
@@ -754,12 +754,13 @@ anagrams('laser', ['lazing', 'lazy', 'lacer']) => []
 For Go: Empty string slice is expected when there are no anagrams found.
 
 ##### solution
+
 ```js
 function anagrams(word, words) {
-    const reversal = word.split('').sort((a, b) => (a.charCodeAt()-b.charCodeAt())).join('');
-    const res=[]
+    const reversal = word.split('').sort((a, b) => (a.charCodeAt() - b.charCodeAt())).join('');
+    const res = []
     words.forEach((i) => {
-        const match = i.split('').sort((a, b) => (a.charCodeAt()-b.charCodeAt())).join('')
+        const match = i.split('').sort((a, b) => (a.charCodeAt() - b.charCodeAt())).join('')
         match === reversal && res.push(i)
     })
     return res
@@ -767,9 +768,81 @@ function anagrams(word, words) {
 ```
 
 ##### the better solution
+
 ```js
 function anagrams(a, b) {
-  return b.filter(w=>''+[...a].sort()===''+[...w].sort());
+    return b.filter(w => '' + [...a].sort() === '' + [...w].sort());
+}
+```
+
+---
+
+### 15. Weight for weight
+
+#### instructions
+
+My friend John and I are members of the "Fat to Fit Club (FFC)". John is worried because each month a list with the weights of members is published and each month he is the last on the list which means he is the heaviest.
+
+I am the one who establishes the list so I told him: "Don't worry any more, I will modify the order of the list". It was decided to attribute a "weight" to numbers. The weight of a number will be from now on the sum of its digits.
+
+For example `99` will have "weight" `18` , `100` will have "weight" `1` so in the list `100` will come before `99` .
+
+Given a string with the weights of FFC members in normal order can you give this string ordered by "weights" of these numbers?
+
+##### Example
+
+```plain
+"56 65 74 100 99 68 86 180 90" ordered by numbers weights becomes: 
+
+"100 180 90 56 65 74 68 86 99"
+```
+
+When two numbers have the same "weight", let us class them as if they were strings (alphabetical ordering) and not numbers:
+
+`180` is before `90` since, having the same "weight" (9), it comes before as a string.
+
+All numbers in the list are positive numbers and the list can be empty.
+
+##### Notes
+
+* it may happen that the input string have leading, trailing whitespaces and more than a unique whitespace between two consecutive numbers
+* For C: The result is freed.
+
+#### solution
+
+```js
+function sumDigit(numStr) {
+    let number = parseInt(numStr),
+        counter = 0;
+    do {
+        counter = number % 10 + counter;
+        number = Math.floor(number / 10);
+    } while (number !== 0)
+    return counter;
+}
+
+function orderWeight(string) {
+    const numbers = string.split(' ');
+    return numbers.sort((a, b) => {
+        const flag = sumDigit(a) - sumDigit(b);
+        const res = flag === 0 ? (a > b ? 1 : -1) : flag
+        return res
+    }).join(' ')
+}
+```
+
+#### the better solution
+
+```js
+function orderWeight(strng) {
+    const sum = (str) => str.split('').reduce((sum, el) => (sum + (+el)), 0);
+
+    function comp(a, b) {
+        let sumA = sum(a);
+        let sumB = sum(b);
+        return sumA === sumB ? a.localeCompare(b) : sumA - sumB;
+    };
+    return strng.split(' ').sort(comp).join(' ');
 }
 ```
 ---
