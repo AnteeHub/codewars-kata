@@ -900,3 +900,39 @@ function solution(nums){
     return nums.filter((v, i) => v != '-' || nums[i - 1] != '-').join(',').replace(/,-,/g, '-');
 }
 ```
+
+---
+
+### 17. Split Strings
+
+#### link
+[https://www.codewars.com/kata/515de9ae9dcfc28eb6000001/train/javascript](https://www.codewars.com/kata/515de9ae9dcfc28eb6000001/train/javascript)
+
+#### instructions
+Complete the solution so that it splits the string into pairs of two characters. If the string contains an odd number of characters then it should replace the missing second character of the final pair with an underscore ('_').
+
+Examples:
+```js
+solution('abc') // should return ['ab', 'c_']
+solution('abcdef') // should return ['ab', 'cd', 'ef']
+```
+
+#### solutions
+```js
+function solution(str) {
+    const res = []
+    let ind = 0;
+    while (ind < str.length) {
+        const child = str.slice(ind, ind += 2);
+        res.push(child.length === 1 ? `${child}_` : child)
+    }
+    return res;
+}
+```
+
+#### the better solution
+```js
+function solution(s){
+   return (s+"_").match(/.{2}/g)||[]
+}
+```
