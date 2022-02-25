@@ -676,8 +676,8 @@ Write a function that, given a string of text (possibly with punctuation and lin
 ##### Assumptions
 
 * A word is a string of letters (A to Z) optionally containing one or more apostrophes (`'`) in ASCII.
-* Apostrophes can appear at the start, middle or end of a word (`'abc`,   `abc'`,   `'abc'`,  `ab'c` are all valid)
-* Any other characters (e.g. `#`,   `\`,  `/` ,  `.` ...) are not part of a word and should be treated as whitespace.
+* Apostrophes can appear at the start, middle or end of a word (`'abc`,     `abc'`,     `'abc'`,  `ab'c` are all valid)
+* Any other characters (e.g. `#`,     `\`,  `/` ,  `.` ...) are not part of a word and should be treated as whitespace.
 * Matches should be case-insensitive, and the words in the result should be lowercased.
 * Ties may be broken arbitrarily.
 * If a text contains fewer than three unique words, then either the top-2 or top-1 words should be returned, or an empty array if a text contains no words.
@@ -845,58 +845,62 @@ function orderWeight(strng) {
     return strng.split(' ').sort(comp).join(' ');
 }
 ```
+
 ---
 
 ### 16. Range Extraction
 
 #### instructions
+
 A format for expressing an ordered list of integers is to use a comma separated list of either
 
-- individual integers
-- or a range of integers denoted by the starting integer separated from the end integer in the range by a dash, '-'. The range includes all integers in the interval including both endpoints. It is not considered a range unless it spans at least 3 numbers. For example `"12,13,15-17"`
+* individual integers
+* or a range of integers denoted by the starting integer separated from the end integer in the range by a dash, '-'. The range includes all integers in the interval including both endpoints. It is not considered a range unless it spans at least 3 numbers. For example `"12,13,15-17"`
 Complete the solution so that it takes a list of integers in increasing order and returns a correctly formatted string in the range format.
 
 ##### Example
+
 ```js
 solution([-6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20]);
 // returns "-6,-3-1,3-5,7-11,14,15,17-20"
 ```
 
 #### solution
+
 ```js
 function handleOutput(raw = [], acc = []) {
-  let output = [];
-  output = raw.concat(acc.length < 3 ? acc : [`${acc[0]}-${acc.slice(-1)}`]);
-  return output;
+    let output = [];
+    output = raw.concat(acc.length < 3 ? acc : [`${acc[0]}-${acc.slice(-1)}`]);
+    return output;
 }
 
 function solution(list) {
-  let acc = [],
-    output = [],
-    index = 0;
+    let acc = [],
+        output = [],
+        index = 0;
 
-  do {
-    const curr = list[index];
-    const last = acc.length === 0 ? undefined : acc.slice(-1);
-    if (last !== undefined && curr - last === 1) {
-    } else {
-      output = handleOutput(output, acc);
-      acc.length = 0;
-    }
+    do {
+        const curr = list[index];
+        const last = acc.length === 0 ? undefined : acc.slice(-1);
+        if (last !== undefined && curr - last === 1) {} else {
+            output = handleOutput(output, acc);
+            acc.length = 0;
+        }
 
-    acc.push(curr);
-    index++;
-  } while (index < list.length);
-  
-  output = handleOutput(output, acc);
-  return output.join(",");
+        acc.push(curr);
+        index++;
+    } while (index < list.length);
+
+    output = handleOutput(output, acc);
+    return output.join(",");
 }
 ```
 
 #### the better solution
+
 ```js
-function solution(nums){
- nums = nums.map((v, i) => nums[i - 1] == v - 1 && nums[i + 1] == v + 1 ? '-' : v);
+function solution(nums) {
+    nums = nums.map((v, i) => nums[i - 1] == v - 1 && nums[i + 1] == v + 1 ? '-' : v);
     return nums.filter((v, i) => v != '-' || nums[i - 1] != '-').join(',').replace(/,-,/g, '-');
 }
 ```
@@ -906,18 +910,22 @@ function solution(nums){
 ### 17. Split Strings
 
 #### link
+
 [https://www.codewars.com/kata/515de9ae9dcfc28eb6000001/train/javascript](https://www.codewars.com/kata/515de9ae9dcfc28eb6000001/train/javascript)
 
 #### instructions
+
 Complete the solution so that it splits the string into pairs of two characters. If the string contains an odd number of characters then it should replace the missing second character of the final pair with an underscore ('_').
 
 Examples:
+
 ```js
 solution('abc') // should return ['ab', 'c_']
 solution('abcdef') // should return ['ab', 'cd', 'ef']
 ```
 
 #### solutions
+
 ```js
 function solution(str) {
     const res = []
@@ -931,8 +939,86 @@ function solution(str) {
 ```
 
 #### the better solution
+
 ```js
-function solution(s){
-   return (s+"_").match(/.{2}/g)||[]
+function solution(s) {
+    return (s + "_").match(/.{2}/g) || []
+}
+```
+
+---
+
+### 18. Assemble string
+
+#### link 
+
+[https://www.codewars.com/kata/6210fb7aabf047000f3a3ad6](https://www.codewars.com/kata/6210fb7aabf047000f3a3ad6)
+
+#### instructions
+
+##### Task
+
+In this task, you need to restore a string from a list of its copies.
+
+You will receive an array of strings. All of them are supposed to be the same as the original but, unfortunately, they were corrupted which means some of the characters were replaced with asterisks ( `"*"` ).
+
+You have to restore the original string based on non-corrupted information you have. If in some cases it is not possible to determine what the original character was, use `"#"` character as a special marker for that.
+
+If the array is empty, then return an empty string.
+
+##### Examples:
+
+```js
+input = [
+    "a*cde",
+    "*bcde",
+    "abc*e"
+]
+result = "abcde"
+
+input = [
+    "a*c**",
+    "**cd*",
+    "a*cd*"
+]
+result = "a#cd#"
+```
+
+#### solutions
+
+```js
+function assembleString(array) {
+    if (array.length === 0) {
+        return '';
+    } else {
+        console.log({
+            array
+        })
+        const initial = array[0].split('')
+        const output = array.reduce((acc, curr, index) => {
+            const length = curr.length;
+            const res = []
+            for (let i = 0; i < length; i++) {
+                if (acc[i] === '*') {
+                    res.push(curr[i])
+                } else {
+                    res.push(acc[i])
+                }
+            }
+            return res
+        }, initial).join('').replace(/\*/g, '#')
+        return output;
+    }
+}
+```
+
+#### the better solution
+
+```js
+function assembleString(array) {
+    return !array.length ? "" : [...array[0]].map((x, i) => {
+        let s = array.find(y => y[i] != "*")
+        return !s ? "#" : s[i]
+    }).join``
 }
 ```
