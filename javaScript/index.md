@@ -676,8 +676,8 @@ Write a function that, given a string of text (possibly with punctuation and lin
 ##### Assumptions
 
 * A word is a string of letters (A to Z) optionally containing one or more apostrophes (`'`) in ASCII.
-* Apostrophes can appear at the start, middle or end of a word (`'abc`,     `abc'`,     `'abc'`,  `ab'c` are all valid)
-* Any other characters (e.g. `#`,     `\`,  `/` ,  `.` ...) are not part of a word and should be treated as whitespace.
+* Apostrophes can appear at the start, middle or end of a word (`'abc`,      `abc'`,      `'abc'`,  `ab'c` are all valid)
+* Any other characters (e.g. `#`,      `\`,  `/` ,  `.` ...) are not part of a word and should be treated as whitespace.
 * Matches should be case-insensitive, and the words in the result should be lowercased.
 * Ties may be broken arbitrarily.
 * If a text contains fewer than three unique words, then either the top-2 or top-1 words should be returned, or an empty array if a text contains no words.
@@ -1020,5 +1020,66 @@ function assembleString(array) {
         let s = array.find(y => y[i] != "*")
         return !s ? "#" : s[i]
     }).join``
+}
+```
+
+---
+
+### 19. Strip Comments
+
+#### link 
+
+[https://www.codewars.com/kata/51c8e37cee245da6b40000bd](https://www.codewars.com/kata/51c8e37cee245da6b40000bd)
+
+#### instructions
+
+Complete the solution so that it strips all text that follows any of a set of comment markers passed in. Any whitespace at the end of the line should also be stripped out.
+
+##### Example:
+
+Given an input string of:
+
+```plain
+apples, pears # and bananas
+grapes
+bananas !apples
+```
+
+The output expected would be:
+
+```plain
+apples, pears
+grapes
+bananas
+```
+
+The code would be called like so:
+
+```js
+var result = solution("apples, pears # and bananas\ngrapes\nbananas !apples", ["#", "!"])
+// result should == "apples, pears\ngrapes\nbananas"
+```
+
+#### solution
+
+```js
+function solution(input, markers = []) {
+    const strs = input.split('\n');
+    return strs.map((str) => {
+        let _str = str;
+        markers.forEach((marker) => {
+            const pos = _str.indexOf(marker);
+            _str = _str.slice(0, pos === -1 ? _str.length : pos);
+        })
+        return _str.trim();
+    }).join('\n')
+}
+```
+
+#### the better solution
+
+```js
+function solution(input, markers = []) {
+    return input.replace(new RegExp(`\\s*[${markers.join('|')}].+`, 'g'), '');
 }
 ```
