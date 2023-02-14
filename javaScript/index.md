@@ -1083,3 +1083,57 @@ function solution(input, markers = []) {
     return input.replace(new RegExp(`\\s*[${markers.join('|')}].+`, 'g'), '');
 }
 ```
+
+
+---
+
+### 20. Adding Big Numbers
+
+#### link 
+[https://www.codewars.com/kata/525f4206b73515bffb000b21/train/javascript](https://www.codewars.com/kata/525f4206b73515bffb000b21/train/javascript)
+
+#### instructions
+
+We need to sum big numbers and we require your help.
+
+Write a function that returns the sum of two numbers. The input numbers are strings and the function must return a string.
+
+
+##### example
+
+```sh
+add("123","321"); -> "444"
+add("11","99"); -> "110"
+```
+
+##### notes
+
+- The input numbers are *big*
+- The input is a string of only digits
+- The numbers are positives
+
+#### solution
+
+```js
+function add(a, b) {
+    const arrA = a.split("").reverse();
+    const arrB = b.split("").reverse();
+    const lengthA = arrA.length;
+    const lengthB = arrB.length;
+    const rounds = Math.max(lengthA, lengthB);
+    const arrRes = [];
+    let lastCarry = 0;
+    for (let i = 0; i < rounds; i++) {
+        let tempA = i < lengthA ? Number(arrA[i]) : 0;
+        let tempB = i < lengthB ? Number(arrB[i]) : 0;
+        const sum = tempA + tempB + lastCarry;
+        lastCarry = Math.floor(sum / 10);
+        arrRes.push(sum % 10);
+    }
+    if (lastCarry) {
+        arrRes.push(lastCarry)
+    }
+    return arrRes.reverse().join("");
+}
+```
+
