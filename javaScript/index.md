@@ -1136,4 +1136,105 @@ function add(a, b) {
     return arrRes.reverse().join("");
 }
 ```
+---
 
+### 21. Sort binary tree by levels
+
+#### link
+[https://www.codewars.com/kata/52bef5e3588c56132c0003bc/train/javascript](https://www.codewars.com/kata/52bef5e3588c56132c0003bc/train/javascript)
+
+#### instructions
+
+You are given a binary tree:
+```js
+class Node { 
+  constructor(value, left = null, right = null) {
+    this.value = value;
+    this.left  = left;
+    this.right = right;
+  }
+}
+```
+
+Your task is to return the list with elements from tree sorted by levels, which means the root element goes first, then root children (from left to right) are second and third, and so on.
+
+Return empty array if root is `null`.
+
+Example 1 - following tree:
+
+```
+                 2
+            8        9
+          1  3     4   5
+```
+
+Should return following list:
+
+```js
+[2,8,9,1,3,4,5]
+```
+
+Example 2 - following tree:
+
+```
+                 1
+            8        4
+              3        5
+                         7
+```
+
+Should return following list:
+
+```js
+[1,8,4,3,5,7]
+```
+
+#### solution
+
+```js
+function treeByLevels(tree) {
+    const res = []
+    let depth = 0
+    if (tree === null) {
+        return res
+    }
+    else {
+        (function flatNode(node = tree, dep = depth) {
+            if (node === null) {
+                return
+            }
+            if (node.value !== null) {
+                res.push({ value: node.value, depth: dep })
+            }
+            if (node.left !== null) {
+                flatNode(node.left, dep + 1)
+            }
+            if (node.right !== null) {
+                flatNode(node.right, dep + 1)
+            }
+        })(tree)
+
+        return res.sort((a, b) => a.depth - b.depth).map((i) => i.value)
+    }
+}
+```
+
+#### the better solution
+
+```js
+function treeByLevels(rootNode) {
+    const queue = [rootNode];
+    const values = [];
+
+    while (queue.length) {
+        let node = queue.shift()
+
+        if (node) {
+            values.push(node.value)
+            queue.push(node.left)
+            queue.push(node.right)
+        }
+    }
+    return values;
+}
+```
