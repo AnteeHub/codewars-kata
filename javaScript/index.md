@@ -1222,19 +1222,20 @@ function treeByLevels(tree) {
 #### the better solution
 
 ```js
-function treeByLevels(rootNode) {
-    const queue = [rootNode];
-    const values = [];
-
-    while (queue.length) {
-        let node = queue.shift()
-
-        if (node) {
-            values.push(node.value)
-            queue.push(node.left)
-            queue.push(node.right)
-        }
+function treeByLevels (rootNode) {
+  if(!rootNode) return []
+  const nodes = [rootNode]
+  const result = []
+  while(nodes.length > 0) {
+    const node = nodes.shift()
+    if(node.left) {
+      nodes.push(node.left)
     }
-    return values;
+    if(node.right) {
+      nodes.push(node.right)
+    }
+    result.push(node.value)
+  }
+  return result;
 }
 ```
