@@ -1239,3 +1239,57 @@ function treeByLevels (rootNode) {
   return result;
 }
 ```
+
+### 22. Summarize ranges
+
+#### link
+[https://www.codewars.com/kata/55fb6537544ae06ccc0000dc/train/javascript](https://www.codewars.com/kata/55fb6537544ae06ccc0000dc/train/javascript)
+
+#### instructions
+
+Given a sorted array of numbers, return the summary of its ranges.
+
+#### examples
+
+```js
+summaryRanges([1, 2, 3, 4]) === ["1->4"]
+summaryRanges([1, 1, 1, 1, 1]) === ["1"]
+summaryRanges([0, 1, 2, 5, 6, 9]) === ["0->2", "5->6", "9"]
+summaryRanges([0, 1, 2, 3, 3, 3, 4, 5, 6, 7]) === ["0->7"]
+summaryRanges([0, 1, 2, 3, 3, 3, 4, 4, 5, 6, 7, 7, 9, 9, 10]) === ["0->7", "9->10"]
+summaryRanges([-2,0, 1, 2, 3, 3, 3, 4, 4, 5, 6, 7, 7, 9, 9, 10, 12]) ===["-2", "0->7", "9->10", "12"]
+```
+
+#### solution
+
+```js
+function range(arr = []) {
+    if (arr.length === 1, arr[0] === arr[arr.length - 1]) {
+        return arr[0].toString()
+    }
+    else {
+        return [arr[0], arr[arr.length - 1]].join('->')
+    }
+}
+
+function summaryRanges(nums = []) {
+    const result = []
+    let tempArr = []
+    for (let i = 0; i < nums.length; i++) {
+        const current = nums[i]
+        const next = nums[i + 1]
+        tempArr.push(current)
+        if (next === undefined || current + 1 < next) {
+            result.push(range(tempArr))
+            tempArr = []
+        }
+    }
+    if (tempArr.length) {
+        result.push(range(tempArr))
+    }
+    return result
+}
+```
+---
+
+
