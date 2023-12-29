@@ -1492,7 +1492,7 @@ function getRangeResult(arr = []) {
 // A range string `1-5` can be considered as `1-2-3-4-5` connected with five `-` symbol
 // Since there are 4 gaps between two numbers in range string `1,2,3,4,5`
 // The challenge could transform into a combination problem: *How many combinations are there to place a hyphen between two numbers?*
-// The answer is: `Sum( C(0,n), C(1,n), C(n,n) )`
+// The answer is: `Sum( C(0,n), C(1,n), ... , C(n,n) )`
 // Finally, don't forget to multiply all the results of range
 
 function descriptions(arr = []) {
@@ -1525,8 +1525,12 @@ function descriptions(arr = []) {
 #### the better solutions
 
 ```js
-const descriptions = (a) =>
-  2 ** a.reduce((x, c, i) => x + Number(a[i + 1] - c === 1), 0);
+// key 1: `Sum( C(0,n), C(1,n), ... , C(n,n) ) === 2 ^ n`,
+// key 2: `res_1 * res_2 * ... * res_n = 2 ^ (res_1 + res_2 + ... + res_n) 
+// key 3: What you need is to calculate how many gaps between all numbers are in the range
+// key 4: the answer is `2 ^ gaps`
+const descriptions = array) =>
+  2 ** array.reduce((perv, curr, i) => prev + Number(array[i + 1] - curr === 1), 0);
 ```
 
 ---
