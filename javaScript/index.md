@@ -17,22 +17,22 @@ Your goal in this kata is to implement a difference function, which subtracts on
 It should remove all values from `list a` , which are present in `list b` keeping their order.
 
 ```js
-arrayDiff([1, 2], [1]) == [2]
+arrayDiff([1, 2], [1]) == [2];
 ```
 
 If a value is present in `b` , all of its occurrences must be removed from the other:
 
 ```js
-arrayDiff([1, 2, 2, 2, 3], [2]) == [1, 3]
+arrayDiff([1, 2, 2, 2, 3], [2]) == [1, 3];
 ```
 
 #### solution
 
 ```js
 function arrayDiff(a, b) {
-    return a.reduce((acc, curr) => {
-        return !b.includes(curr) ? [...acc, curr] : acc
-    }, []);
+  return a.reduce((acc, curr) => {
+    return !b.includes(curr) ? [...acc, curr] : acc;
+  }, []);
 }
 ```
 
@@ -63,13 +63,13 @@ Given `n` , take the sum of the digits of `n` . If that value has more than one 
 
 ```js
 function digital_root(n) {
-    let sum = 0;
-    let curr = n;
-    do {
-        sum += curr % 10;
-        curr = Math.floor(curr / 10);
-    } while (curr !== 0)
-    return sum >= 10 ? digital_root(sum) : sum;
+  let sum = 0;
+  let curr = n;
+  do {
+    sum += curr % 10;
+    curr = Math.floor(curr / 10);
+  } while (curr !== 0);
+  return sum >= 10 ? digital_root(sum) : sum;
 }
 ```
 
@@ -77,7 +77,7 @@ function digital_root(n) {
 
 ```js
 function digital_root(n) {
-    return (n - 1) % 9 + 1;
+  return ((n - 1) % 9) + 1;
 }
 ```
 
@@ -85,7 +85,7 @@ function digital_root(n) {
 
 ### 3. Who likes it?
 
-#### link 
+#### link
 
 [https://www.codewars.com/kata/5266876b8f4bf2da9b000362](https://www.codewars.com/kata/5266876b8f4bf2da9b000362)
 
@@ -109,18 +109,20 @@ Note: For `4` or more names, the number in `"and 2 others"` simply increases.
 
 ```js
 function likes(names) {
-    switch (names.length) {
-        case 0:
-        case 1:
-            return `${names[0] ? names[0] : 'no one'} likes this`;
-        case 2:
-            return `${names.join(' and ')} like this`;
-        case 3:
-        case 4:
-        default:
-            const [first, second, ...rest] = names;
-            return `${first}, ${second} and ${rest.length > 1 ? rest.length + ' others' : rest[0]} like this`;
-    }
+  switch (names.length) {
+    case 0:
+    case 1:
+      return `${names[0] ? names[0] : "no one"} likes this`;
+    case 2:
+      return `${names.join(" and ")} like this`;
+    case 3:
+    case 4:
+    default:
+      const [first, second, ...rest] = names;
+      return `${first}, ${second} and ${
+        rest.length > 1 ? rest.length + " others" : rest[0]
+      } like this`;
+  }
 }
 ```
 
@@ -128,47 +130,90 @@ function likes(names) {
 
 ```js
 function likes(peopleNames) {
-    var feels = new FeelingsParty('like', 'this');
-    for (var name in peopleNames) feels.addFeeler(new Person(peopleNames[name]));
-    return feels.shareTheseFeelings();
+  var feels = new FeelingsParty("like", "this");
+  for (var name in peopleNames) feels.addFeeler(new Person(peopleNames[name]));
+  return feels.shareTheseFeelings();
 }
 
 function Person(name) {
-    this.name = name;
+  this.name = name;
 }
 
-Person.prototype.getName = function() {
-    return this.name;
-}
+Person.prototype.getName = function () {
+  return this.name;
+};
 
 function FeelingsParty(emotion, target) {
-    this.emotionalContext = emotion;
-    this.emotionalSubject = target;
-    this.peopleFeelingThisWay = [];
-    this.numPeopleFeelingThisWay = 0;
+  this.emotionalContext = emotion;
+  this.emotionalSubject = target;
+  this.peopleFeelingThisWay = [];
+  this.numPeopleFeelingThisWay = 0;
 }
 
-FeelingsParty.prototype.getEmotionalContext = function() {
-    return this.type;
-}
+FeelingsParty.prototype.getEmotionalContext = function () {
+  return this.type;
+};
 
-FeelingsParty.prototype.addFeeler = function(person) {
-    this.numPeopleFeelingThisWay++;
-    this.peopleFeelingThisWay.push(person);
-}
+FeelingsParty.prototype.addFeeler = function (person) {
+  this.numPeopleFeelingThisWay++;
+  this.peopleFeelingThisWay.push(person);
+};
 
-FeelingsParty.prototype.shareTheseFeelings = function() {
-    this.findTheRightWords();
-    if (this.numPeopleFeelingThisWay == 0) return 'no one ' + this.emotionalContext + ' ' + this.emotionalSubject;
-    if (this.numPeopleFeelingThisWay == 1) return '' + this.peopleFeelingThisWay[0].getName() + ' ' + this.emotionalContext + ' ' + this.emotionalSubject;
-    if (this.numPeopleFeelingThisWay == 2) return '' + this.peopleFeelingThisWay[0].getName() + ' and ' + this.peopleFeelingThisWay[1].getName() + ' ' + this.emotionalContext + ' ' + this.emotionalSubject;
-    if (this.numPeopleFeelingThisWay == 3) return '' + this.peopleFeelingThisWay[0].getName() + ', ' + this.peopleFeelingThisWay[1].getName() + ' and ' + this.peopleFeelingThisWay[2].getName() + ' ' + this.emotionalContext + ' ' + this.emotionalSubject;
-    return '' + this.peopleFeelingThisWay[0].getName() + ', ' + this.peopleFeelingThisWay[1].getName() + ' and ' + (this.numPeopleFeelingThisWay - 2) + ' others ' + this.emotionalContext + ' ' + this.emotionalSubject;
-}
+FeelingsParty.prototype.shareTheseFeelings = function () {
+  this.findTheRightWords();
+  if (this.numPeopleFeelingThisWay == 0)
+    return "no one " + this.emotionalContext + " " + this.emotionalSubject;
+  if (this.numPeopleFeelingThisWay == 1)
+    return (
+      "" +
+      this.peopleFeelingThisWay[0].getName() +
+      " " +
+      this.emotionalContext +
+      " " +
+      this.emotionalSubject
+    );
+  if (this.numPeopleFeelingThisWay == 2)
+    return (
+      "" +
+      this.peopleFeelingThisWay[0].getName() +
+      " and " +
+      this.peopleFeelingThisWay[1].getName() +
+      " " +
+      this.emotionalContext +
+      " " +
+      this.emotionalSubject
+    );
+  if (this.numPeopleFeelingThisWay == 3)
+    return (
+      "" +
+      this.peopleFeelingThisWay[0].getName() +
+      ", " +
+      this.peopleFeelingThisWay[1].getName() +
+      " and " +
+      this.peopleFeelingThisWay[2].getName() +
+      " " +
+      this.emotionalContext +
+      " " +
+      this.emotionalSubject
+    );
+  return (
+    "" +
+    this.peopleFeelingThisWay[0].getName() +
+    ", " +
+    this.peopleFeelingThisWay[1].getName() +
+    " and " +
+    (this.numPeopleFeelingThisWay - 2) +
+    " others " +
+    this.emotionalContext +
+    " " +
+    this.emotionalSubject
+  );
+};
 
-FeelingsParty.prototype.findTheRightWords = function() {
-    if (this.numPeopleFeelingThisWay == 0 || this.numPeopleFeelingThisWay == 1) this.emotionalContext += 's';
-}
+FeelingsParty.prototype.findTheRightWords = function () {
+  if (this.numPeopleFeelingThisWay == 0 || this.numPeopleFeelingThisWay == 1)
+    this.emotionalContext += "s";
+};
 ```
 
 ---
@@ -177,7 +222,7 @@ FeelingsParty.prototype.findTheRightWords = function() {
 
 #### link
 
- [https://www.codewars.com/kata/54c27a33fb7da0db0100040e](https://www.codewars.com/kata/54c27a33fb7da0db0100040e)
+[https://www.codewars.com/kata/54c27a33fb7da0db0100040e](https://www.codewars.com/kata/54c27a33fb7da0db0100040e)
 
 #### instructions
 
@@ -209,16 +254,16 @@ The tests will always use some integral number, so don't worry about that in dyn
 #### solution
 
 ```js
-var isSquare = function(n) {
-    return parseInt(Math.sqrt(n)) === Math.sqrt(n);
-}
+var isSquare = function (n) {
+  return parseInt(Math.sqrt(n)) === Math.sqrt(n);
+};
 ```
 
 #### the better solution
 
 ```js
 function isSquare(n) {
-    return Math.sqrt(n) % 1 === 0;
+  return Math.sqrt(n) % 1 === 0;
 }
 ```
 
@@ -226,7 +271,7 @@ function isSquare(n) {
 
 ### 5. Vowel Count
 
-#### link 
+#### link
 
 [https://www.codewars.com/kata/54ff3102c1bad923760001f3](https://www.codewars.com/kata/54ff3102c1bad923760001f3)
 
@@ -242,10 +287,10 @@ The input string will only consist of lower case letters and/or spaces.
 
 ```js
 function getCount(str) {
-    const regex = /[aeiou]/g;
-    const matches = str.match(regex)
-    const vowelsCount = matches ? matches.length : 0;
-    return vowelsCount;
+  const regex = /[aeiou]/g;
+  const matches = str.match(regex);
+  const vowelsCount = matches ? matches.length : 0;
+  return vowelsCount;
 }
 ```
 
@@ -253,7 +298,7 @@ function getCount(str) {
 
 ```js
 function getCount(str) {
-    return (str.match(/[aeiou]/ig) || []).length;
+  return (str.match(/[aeiou]/gi) || []).length;
 }
 ```
 
@@ -261,7 +306,7 @@ function getCount(str) {
 
 ### 6. Playing with digits
 
-#### link 
+#### link
 
 [https://www.codewars.com/kata/5552101f47fc5178b1000050](https://www.codewars.com/kata/5552101f47fc5178b1000050)
 
@@ -282,7 +327,7 @@ Given a positive integer n written as abcd... (a, b, c, d... being digits) and a
 we want to find a positive integer `k` , if it exists, such as the sum of the digits of `n` taken to the successive powers of `p` is equal to `k * n` .
 In other words:
 
-> Is there an integer k such as : (a ^ p + b ^ (p+1) + c ^(p+2) + d ^ (p+3) + ...) = n * k
+> Is there an integer k such as : (a ^ p + b ^ (p+1) + c ^(p+2) + d ^ (p+3) + ...) = n \* k
 
 If it is the case we will return `k` , if not return `-1` .
 
@@ -303,18 +348,18 @@ return 51 since 4³ + 6⁴ + 2⁵ + 8⁶ + 8⁷ = 2360688 = 46288 * 51
 
 ```js
 function digPow(n, p) {
-    const digArr = [];
-    let division = n;
-    do {
-        digArr.push(division % 10);
-        division = Math.floor(division / 10);
-    } while (division !== 0);
+  const digArr = [];
+  let division = n;
+  do {
+    digArr.push(division % 10);
+    division = Math.floor(division / 10);
+  } while (division !== 0);
 
-    const powers = digArr.reverse().reduce((acc, curr, index) => {
-        return acc + Math.pow(curr, (index + p));
-    }, 0)
+  const powers = digArr.reverse().reduce((acc, curr, index) => {
+    return acc + Math.pow(curr, index + p);
+  }, 0);
 
-    return powers % n === 0 ? powers / n : -1
+  return powers % n === 0 ? powers / n : -1;
 }
 ```
 
@@ -322,7 +367,7 @@ function digPow(n, p) {
 
 ### 7. Bit Counting
 
-#### link 
+#### link
 
 [https://www.codewars.com/kata/526571aae218b8ee490006f4](https://www.codewars.com/kata/526571aae218b8ee490006f4)
 
@@ -337,17 +382,17 @@ The binary representation of `1234` is `10011010010` , so the function should re
 #### solution
 
 ```js
-const countBits = function(n) {
-    const res = n.toString(2);
-    console.log(res)
-    return res.split('').reduce((acc, curr) => (curr * 1) ? acc + 1 : acc, 0)
+const countBits = function (n) {
+  const res = n.toString(2);
+  console.log(res);
+  return res.split("").reduce((acc, curr) => (curr * 1 ? acc + 1 : acc), 0);
 };
 ```
 
 #### the better solution
 
 ```js
-countBits = n => n.toString(2).split('0').join('').length;
+countBits = (n) => n.toString(2).split("0").join("").length;
 ```
 
 #### warning
@@ -358,7 +403,7 @@ You can not use `>>` to calculate.(**Big int** problem)
 
 ### 8. Are they the "same"?
 
-#### link 
+#### link
 
 [https://www.codewars.com/kata/550498447451fbbd7600041c](https://www.codewars.com/kata/550498447451fbbd7600041c)
 
@@ -371,30 +416,39 @@ Given two arrays `a` and `b` write a function `comp(a, b)` (or `compSame(a, b)` 
 **Valid arrays**
 
 ```js
-a = [121, 144, 19, 161, 19, 144, 19, 11]
-b = [121, 14641, 20736, 361, 25921, 361, 20736, 361]
+a = [121, 144, 19, 161, 19, 144, 19, 11];
+b = [121, 14641, 20736, 361, 25921, 361, 20736, 361];
 ```
 
 `comp(a, b)` returns true because in `b` 121 is the square of 11, 14641 is the square of 121, 20736 the square of 144, 361 the square of 19, 25921 the square of 161, and so on. It gets obvious if we write `b` 's elements in terms of squares:
 
 ```js
-a = [121, 144, 19, 161, 19, 144, 19, 11]
-b = [11 * 11, 121 * 121, 144 * 144, 19 * 19, 161 * 161, 19 * 19, 144 * 144, 19 * 19]
+a = [121, 144, 19, 161, 19, 144, 19, 11];
+b = [
+  11 * 11,
+  121 * 121,
+  144 * 144,
+  19 * 19,
+  161 * 161,
+  19 * 19,
+  144 * 144,
+  19 * 19,
+];
 ```
 
 **Invalid arrays**
 If, for example, we change the first number to something else, `comp` is not returning true anymore:
 
 ```js
-a = [121, 144, 19, 161, 19, 144, 19, 11]
-b = [132, 14641, 20736, 361, 25921, 361, 20736, 361]
+a = [121, 144, 19, 161, 19, 144, 19, 11];
+b = [132, 14641, 20736, 361, 25921, 361, 20736, 361];
 ```
 
 `comp(a,b)` returns `false` because in `b` 132 is not the square of any number of `a` .
 
 ```js
-a = [121, 144, 19, 161, 19, 144, 19, 11]
-b = [121, 14641, 20736, 36100, 25921, 361, 20736, 361]
+a = [121, 144, 19, 161, 19, 144, 19, 11];
+b = [121, 14641, 20736, 36100, 25921, 361, 20736, 361];
 ```
 
 `comp(a,b)` returns `false` because in `b` 36100 is not the square of any number of `a` .
@@ -415,31 +469,34 @@ The two arrays have the same size `(> 0)` given as parameter in function `comp` 
 
 ```js
 function comp(array1, array2) {
-    if (!array1 || !array2) {
-        return false
-    }
-    if (array1.length === 0 && array2.length === 0) {
-        return true;
-    }
-    if (array1.length === 0 || array2.length === 0 || (array1.length !== array2.length)) {
-        return false
-    }
-    const aMap = array1.map((i) => i * i)
-    let i = 0,
-        length = aMap.length;
-    for (; i < length; i++) {
-        if (array2.length === 0) {
-            return false;
-        }
-        const pos = array2.indexOf(aMap[i]);
-        if (pos < 0) {
-            return false
-        } else {
-            array2.splice(pos, 1);
-        }
-
-    }
+  if (!array1 || !array2) {
+    return false;
+  }
+  if (array1.length === 0 && array2.length === 0) {
     return true;
+  }
+  if (
+    array1.length === 0 ||
+    array2.length === 0 ||
+    array1.length !== array2.length
+  ) {
+    return false;
+  }
+  const aMap = array1.map((i) => i * i);
+  let i = 0,
+    length = aMap.length;
+  for (; i < length; i++) {
+    if (array2.length === 0) {
+      return false;
+    }
+    const pos = array2.indexOf(aMap[i]);
+    if (pos < 0) {
+      return false;
+    } else {
+      array2.splice(pos, 1);
+    }
+  }
+  return true;
 }
 ```
 
@@ -447,12 +504,12 @@ function comp(array1, array2) {
 
 ```js
 const comp = (array1, array2) =>
-    Array.isArray(array1) &&
-    Array.isArray(array2) &&
-    array1.every(item => {
-        const index = array2.indexOf(Math.pow(item, 2))
-        return index > -1 ? array2.splice(index, 1) : false
-    })
+  Array.isArray(array1) &&
+  Array.isArray(array2) &&
+  array1.every((item) => {
+    const index = array2.indexOf(Math.pow(item, 2));
+    return index > -1 ? array2.splice(index, 1) : false;
+  });
 ```
 
 ---
@@ -477,16 +534,16 @@ If a string contains all repeating characters, it should return an empty string 
 
 ```js
 function firstNonRepeatingLetter(s) {
-    const str = s.toLowerCase();
-    let i = 0,
-        length = str.length;
-    for (; i < length; i++) {
-        const flag = str.indexOf(str[i]) === str.lastIndexOf(str[i])
-        if (flag) {
-            return s[i]
-        }
+  const str = s.toLowerCase();
+  let i = 0,
+    length = str.length;
+  for (; i < length; i++) {
+    const flag = str.indexOf(str[i]) === str.lastIndexOf(str[i]);
+    if (flag) {
+      return s[i];
     }
-    return ''
+  }
+  return "";
 }
 ```
 
@@ -508,30 +565,31 @@ You live in the city of Cartesia where all roads are laid out in a perfect grid.
 
 ```js
 function isValidWalk(walk) {
-    if (walk && walk.length !== 10)
-        return false;
-    let horizontal = 0;
-    let vertical = 0;
-    let distance = 0;
-    const MATCH_DISTANCE = 10;
-    walk.forEach((item) => {
-        distance++;
-        switch (item) {
-            case 'w':
-                horizontal--;
-                break;
-            case 'e':
-                horizontal++;
-                break;
-            case 'n':
-                vertical++;
-                break;
-            case 's':
-                vertical--;
-                break;
-        }
-    })
-    return distance + Math.abs(horizontal) + Math.abs(vertical) === MATCH_DISTANCE;
+  if (walk && walk.length !== 10) return false;
+  let horizontal = 0;
+  let vertical = 0;
+  let distance = 0;
+  const MATCH_DISTANCE = 10;
+  walk.forEach((item) => {
+    distance++;
+    switch (item) {
+      case "w":
+        horizontal--;
+        break;
+      case "e":
+        horizontal++;
+        break;
+      case "n":
+        vertical++;
+        break;
+      case "s":
+        vertical--;
+        break;
+    }
+  });
+  return (
+    distance + Math.abs(horizontal) + Math.abs(vertical) === MATCH_DISTANCE
+  );
 }
 ```
 
@@ -556,20 +614,20 @@ Given a list lst and a number N, create a new list that contains each number of 
 ##### Example
 
 ```js
-deleteNth([1, 1, 1, 1], 2) // return [1,1]
-deleteNth([20, 37, 20, 21], 1) // return [20,37,21]
+deleteNth([1, 1, 1, 1], 2); // return [1,1]
+deleteNth([20, 37, 20, 21], 1); // return [20,37,21]
 ```
 
 #### solution
 
 ```js
 function deleteNth(arr, n) {
-    let countMap = new Map();
-    return arr.filter((item) => {
-        const count = countMap.get(item) || 0;
-        countMap.set(item, count ? count + 1 : 1); // make sure count >= 1
-        return count < n; // 'count' changed after got the value of Map.get(item)
-    })
+  let countMap = new Map();
+  return arr.filter((item) => {
+    const count = countMap.get(item) || 0;
+    countMap.set(item, count ? count + 1 : 1); // make sure count >= 1
+    return count < n; // 'count' changed after got the value of Map.get(item)
+  });
 }
 ```
 
@@ -577,8 +635,8 @@ function deleteNth(arr, n) {
 
 ```js
 function deleteNth(a, x) {
-    let m = {}; // no using Map()
-    return a.filter(v => (m[v] = m[v] + 1 || 1) <= x);
+  let m = {}; // no using Map()
+  return a.filter((v) => (m[v] = m[v] + 1 || 1) <= x);
 }
 ```
 
@@ -599,7 +657,7 @@ The class is designed to take in an array of values and an integer indicating ho
 The following are some examples of how this class is used:
 
 ```js
-var helper = new PaginationHelper(['a', 'b', 'c', 'd', 'e', 'f'], 4);
+var helper = new PaginationHelper(["a", "b", "c", "d", "e", "f"], 4);
 helper.pageCount(); //should == 2
 helper.itemCount(); //should == 6
 helper.pageItemCount(0); //should == 4
@@ -621,44 +679,50 @@ helper.pageIndex(-10); //should == -1
 // The constructor takes in an array of items and a integer indicating how many
 // items fit within a single page
 function PaginationHelper(collection, itemsPerPage) {
-    this.collection = collection || [];
-    this.itemsPerPage = itemsPerPage;
+  this.collection = collection || [];
+  this.itemsPerPage = itemsPerPage;
 }
 
 // returns the number of items within the entire collection
-PaginationHelper.prototype.itemCount = function() {
-    return this.collection.length;
-}
+PaginationHelper.prototype.itemCount = function () {
+  return this.collection.length;
+};
 
 // returns the number of pages
-PaginationHelper.prototype.pageCount = function() {
-    return Math.ceil(this.collection.length / this.itemsPerPage);
-}
+PaginationHelper.prototype.pageCount = function () {
+  return Math.ceil(this.collection.length / this.itemsPerPage);
+};
 
 // returns the number of items on the current page. page_index is zero based.
 // this method should return -1 for pageIndex values that are out of range
-PaginationHelper.prototype.pageItemCount = function(pageIndex) {
-    if (this.collection.length === 0) {
-        return 0;
-    }
-    const rest = this.collection.length - (this.itemsPerPage * pageIndex);
-    if (rest < 0)
-        return -1;
-    return rest > this.itemsPerPage ? this.itemsPerPage : rest;
-}
+PaginationHelper.prototype.pageItemCount = function (pageIndex) {
+  if (this.collection.length === 0) {
+    return 0;
+  }
+  const rest = this.collection.length - this.itemsPerPage * pageIndex;
+  if (rest < 0) return -1;
+  return rest > this.itemsPerPage ? this.itemsPerPage : rest;
+};
 
 // determines what page an item is on. Zero based indexes
 // this method should return -1 for itemIndex values that are out of range
-PaginationHelper.prototype.pageIndex = function(itemIndex) {
-    if (itemIndex > this.collection.length || itemIndex < 0 || itemIndex === undefined || this.collection.length === 0)
-        return -1;
-    const perPage = isNaN(this.itemsPerPage) ? this.collection.length : this.itemsPerPage;
-    const indexBase = Math.ceil(itemIndex / perPage);
-    if (indexBase === 0) {
-        return 0;
-    }
-    return indexBase - 1;
-}
+PaginationHelper.prototype.pageIndex = function (itemIndex) {
+  if (
+    itemIndex > this.collection.length ||
+    itemIndex < 0 ||
+    itemIndex === undefined ||
+    this.collection.length === 0
+  )
+    return -1;
+  const perPage = isNaN(this.itemsPerPage)
+    ? this.collection.length
+    : this.itemsPerPage;
+  const indexBase = Math.ceil(itemIndex / perPage);
+  if (indexBase === 0) {
+    return 0;
+  }
+  return indexBase - 1;
+};
 ```
 
 ---
@@ -675,12 +739,12 @@ Write a function that, given a string of text (possibly with punctuation and lin
 
 ##### Assumptions
 
-* A word is a string of letters (A to Z) optionally containing one or more apostrophes (`'`) in ASCII.
-* Apostrophes can appear at the start, middle or end of a word (`'abc`,      `abc'`,      `'abc'`,  `ab'c` are all valid)
-* Any other characters (e.g. `#`,      `\`,  `/` ,  `.` ...) are not part of a word and should be treated as whitespace.
-* Matches should be case-insensitive, and the words in the result should be lowercased.
-* Ties may be broken arbitrarily.
-* If a text contains fewer than three unique words, then either the top-2 or top-1 words should be returned, or an empty array if a text contains no words.
+- A word is a string of letters (A to Z) optionally containing one or more apostrophes (`'`) in ASCII.
+- Apostrophes can appear at the start, middle or end of a word (`'abc`, `abc'`, `'abc'`, `ab'c` are all valid)
+- Any other characters (e.g. `#`, `\`, `/` , `.` ...) are not part of a word and should be treated as whitespace.
+- Matches should be case-insensitive, and the words in the result should be lowercased.
+- Ties may be broken arbitrarily.
+- If a text contains fewer than three unique words, then either the top-2 or top-1 words should be returned, or an empty array if a text contains no words.
 
 ##### Examples
 
@@ -709,11 +773,14 @@ top_3_words("  //wont won't won't")
 
 ```js
 function topThreeWords(text) {
-    const arr = text.toLowerCase().match(/(?!')[a-z']+/gi) || [];
-    const map = arr.reduce((map, item) => {
-        return map.set(item, (map.get(item) || 0) + 1)
-    }, new Map())
-    return [...map].sort((a, b) => b[1] - a[1]).slice(0, 3).map(i => i[0].toLowerCase());
+  const arr = text.toLowerCase().match(/(?!')[a-z']+/gi) || [];
+  const map = arr.reduce((map, item) => {
+    return map.set(item, (map.get(item) || 0) + 1);
+  }, new Map());
+  return [...map]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map((i) => i[0].toLowerCase());
 }
 ```
 
@@ -721,7 +788,7 @@ function topThreeWords(text) {
 
 ### 14. Where my anagrams at?
 
-#### link 
+#### link
 
 [https://www.codewars.com/kata/523a86aa4230ebb5420001e1/train/javascript](https://www.codewars.com/kata/523a86aa4230ebb5420001e1/train/javascript)
 
@@ -730,13 +797,13 @@ function topThreeWords(text) {
 What is an anagram? Well, two words are anagrams of each other if they both contain the same letters. For example:
 
 ```js
-'abba' & 'baab' == true
+"abba" & ("baab" == true);
 
-    'abba' & 'bbaa' == true
+"abba" & ("bbaa" == true);
 
-'abba' & 'abbba' == false
+"abba" & ("abbba" == false);
 
-    'abba' & 'abca' == false
+"abba" & ("abca" == false);
 ```
 
 Write a function that will find all the anagrams of a word from a list. You will be given two inputs a word and an array with words. You should return an array of all the anagrams or an empty array if there are none. For example:
@@ -757,13 +824,19 @@ For Go: Empty string slice is expected when there are no anagrams found.
 
 ```js
 function anagrams(word, words) {
-    const reversal = word.split('').sort((a, b) => (a.charCodeAt() - b.charCodeAt())).join('');
-    const res = []
-    words.forEach((i) => {
-        const match = i.split('').sort((a, b) => (a.charCodeAt() - b.charCodeAt())).join('')
-        match === reversal && res.push(i)
-    })
-    return res
+  const reversal = word
+    .split("")
+    .sort((a, b) => a.charCodeAt() - b.charCodeAt())
+    .join("");
+  const res = [];
+  words.forEach((i) => {
+    const match = i
+      .split("")
+      .sort((a, b) => a.charCodeAt() - b.charCodeAt())
+      .join("");
+    match === reversal && res.push(i);
+  });
+  return res;
 }
 ```
 
@@ -771,7 +844,7 @@ function anagrams(word, words) {
 
 ```js
 function anagrams(a, b) {
-    return b.filter(w => '' + [...a].sort() === '' + [...w].sort());
+  return b.filter((w) => "" + [...a].sort() === "" + [...w].sort());
 }
 ```
 
@@ -792,7 +865,7 @@ Given a string with the weights of FFC members in normal order can you give this
 ##### Example
 
 ```plain
-"56 65 74 100 99 68 86 180 90" ordered by numbers weights becomes: 
+"56 65 74 100 99 68 86 180 90" ordered by numbers weights becomes:
 
 "100 180 90 56 65 74 68 86 99"
 ```
@@ -805,29 +878,31 @@ All numbers in the list are positive numbers and the list can be empty.
 
 ##### Notes
 
-* it may happen that the input string have leading, trailing whitespaces and more than a unique whitespace between two consecutive numbers
-* For C: The result is freed.
+- it may happen that the input string have leading, trailing whitespaces and more than a unique whitespace between two consecutive numbers
+- For C: The result is freed.
 
 #### solution
 
 ```js
 function sumDigit(numStr) {
-    let number = parseInt(numStr),
-        counter = 0;
-    do {
-        counter = number % 10 + counter;
-        number = Math.floor(number / 10);
-    } while (number !== 0)
-    return counter;
+  let number = parseInt(numStr),
+    counter = 0;
+  do {
+    counter = (number % 10) + counter;
+    number = Math.floor(number / 10);
+  } while (number !== 0);
+  return counter;
 }
 
 function orderWeight(string) {
-    const numbers = string.split(' ');
-    return numbers.sort((a, b) => {
-        const flag = sumDigit(a) - sumDigit(b);
-        const res = flag === 0 ? (a > b ? 1 : -1) : flag
-        return res
-    }).join(' ')
+  const numbers = string.split(" ");
+  return numbers
+    .sort((a, b) => {
+      const flag = sumDigit(a) - sumDigit(b);
+      const res = flag === 0 ? (a > b ? 1 : -1) : flag;
+      return res;
+    })
+    .join(" ");
 }
 ```
 
@@ -835,14 +910,14 @@ function orderWeight(string) {
 
 ```js
 function orderWeight(strng) {
-    const sum = (str) => str.split('').reduce((sum, el) => (sum + (+el)), 0);
+  const sum = (str) => str.split("").reduce((sum, el) => sum + +el, 0);
 
-    function comp(a, b) {
-        let sumA = sum(a);
-        let sumB = sum(b);
-        return sumA === sumB ? a.localeCompare(b) : sumA - sumB;
-    };
-    return strng.split(' ').sort(comp).join(' ');
+  function comp(a, b) {
+    let sumA = sum(a);
+    let sumB = sum(b);
+    return sumA === sumB ? a.localeCompare(b) : sumA - sumB;
+  }
+  return strng.split(" ").sort(comp).join(" ");
 }
 ```
 
@@ -854,14 +929,16 @@ function orderWeight(strng) {
 
 A format for expressing an ordered list of integers is to use a comma separated list of either
 
-* individual integers
-* or a range of integers denoted by the starting integer separated from the end integer in the range by a dash, '-'. The range includes all integers in the interval including both endpoints. It is not considered a range unless it spans at least 3 numbers. For example `"12,13,15-17"`
-Complete the solution so that it takes a list of integers in increasing order and returns a correctly formatted string in the range format.
+- individual integers
+- or a range of integers denoted by the starting integer separated from the end integer in the range by a dash, '-'. The range includes all integers in the interval including both endpoints. It is not considered a range unless it spans at least 3 numbers. For example `"12,13,15-17"`
+  Complete the solution so that it takes a list of integers in increasing order and returns a correctly formatted string in the range format.
 
 ##### Example
 
 ```js
-solution([-6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20]);
+solution([
+  -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20,
+]);
 // returns "-6,-3-1,3-5,7-11,14,15,17-20"
 ```
 
@@ -869,30 +946,31 @@ solution([-6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20
 
 ```js
 function handleOutput(raw = [], acc = []) {
-    let output = [];
-    output = raw.concat(acc.length < 3 ? acc : [`${acc[0]}-${acc.slice(-1)}`]);
-    return output;
+  let output = [];
+  output = raw.concat(acc.length < 3 ? acc : [`${acc[0]}-${acc.slice(-1)}`]);
+  return output;
 }
 
 function solution(list) {
-    let acc = [],
-        output = [],
-        index = 0;
+  let acc = [],
+    output = [],
+    index = 0;
 
-    do {
-        const curr = list[index];
-        const last = acc.length === 0 ? undefined : acc.slice(-1);
-        if (last !== undefined && curr - last === 1) {} else {
-            output = handleOutput(output, acc);
-            acc.length = 0;
-        }
+  do {
+    const curr = list[index];
+    const last = acc.length === 0 ? undefined : acc.slice(-1);
+    if (last !== undefined && curr - last === 1) {
+    } else {
+      output = handleOutput(output, acc);
+      acc.length = 0;
+    }
 
-        acc.push(curr);
-        index++;
-    } while (index < list.length);
+    acc.push(curr);
+    index++;
+  } while (index < list.length);
 
-    output = handleOutput(output, acc);
-    return output.join(",");
+  output = handleOutput(output, acc);
+  return output.join(",");
 }
 ```
 
@@ -900,8 +978,13 @@ function solution(list) {
 
 ```js
 function solution(nums) {
-    nums = nums.map((v, i) => nums[i - 1] == v - 1 && nums[i + 1] == v + 1 ? '-' : v);
-    return nums.filter((v, i) => v != '-' || nums[i - 1] != '-').join(',').replace(/,-,/g, '-');
+  nums = nums.map((v, i) =>
+    nums[i - 1] == v - 1 && nums[i + 1] == v + 1 ? "-" : v
+  );
+  return nums
+    .filter((v, i) => v != "-" || nums[i - 1] != "-")
+    .join(",")
+    .replace(/,-,/g, "-");
 }
 ```
 
@@ -915,26 +998,26 @@ function solution(nums) {
 
 #### instructions
 
-Complete the solution so that it splits the string into pairs of two characters. If the string contains an odd number of characters then it should replace the missing second character of the final pair with an underscore ('_').
+Complete the solution so that it splits the string into pairs of two characters. If the string contains an odd number of characters then it should replace the missing second character of the final pair with an underscore ('\_').
 
 Examples:
 
 ```js
-solution('abc') // should return ['ab', 'c_']
-solution('abcdef') // should return ['ab', 'cd', 'ef']
+solution("abc"); // should return ['ab', 'c_']
+solution("abcdef"); // should return ['ab', 'cd', 'ef']
 ```
 
 #### solutions
 
 ```js
 function solution(str) {
-    const res = []
-    let ind = 0;
-    while (ind < str.length) {
-        const child = str.slice(ind, ind += 2);
-        res.push(child.length === 1 ? `${child}_` : child)
-    }
-    return res;
+  const res = [];
+  let ind = 0;
+  while (ind < str.length) {
+    const child = str.slice(ind, (ind += 2));
+    res.push(child.length === 1 ? `${child}_` : child);
+  }
+  return res;
 }
 ```
 
@@ -942,7 +1025,7 @@ function solution(str) {
 
 ```js
 function solution(s) {
-    return (s + "_").match(/.{2}/g) || []
+  return (s + "_").match(/.{2}/g) || [];
 }
 ```
 
@@ -950,7 +1033,7 @@ function solution(s) {
 
 ### 18. Assemble string
 
-#### link 
+#### link
 
 [https://www.codewars.com/kata/6210fb7aabf047000f3a3ad6](https://www.codewars.com/kata/6210fb7aabf047000f3a3ad6)
 
@@ -969,46 +1052,41 @@ If the array is empty, then return an empty string.
 ##### Examples:
 
 ```js
-input = [
-    "a*cde",
-    "*bcde",
-    "abc*e"
-]
-result = "abcde"
+input = ["a*cde", "*bcde", "abc*e"];
+result = "abcde";
 
-input = [
-    "a*c**",
-    "**cd*",
-    "a*cd*"
-]
-result = "a#cd#"
+input = ["a*c**", "**cd*", "a*cd*"];
+result = "a#cd#";
 ```
 
 #### solutions
 
 ```js
 function assembleString(array) {
-    if (array.length === 0) {
-        return '';
-    } else {
-        console.log({
-            array
-        })
-        const initial = array[0].split('')
-        const output = array.reduce((acc, curr, index) => {
-            const length = curr.length;
-            const res = []
-            for (let i = 0; i < length; i++) {
-                if (acc[i] === '*') {
-                    res.push(curr[i])
-                } else {
-                    res.push(acc[i])
-                }
-            }
-            return res
-        }, initial).join('').replace(/\*/g, '#')
-        return output;
-    }
+  if (array.length === 0) {
+    return "";
+  } else {
+    console.log({
+      array,
+    });
+    const initial = array[0].split("");
+    const output = array
+      .reduce((acc, curr, index) => {
+        const length = curr.length;
+        const res = [];
+        for (let i = 0; i < length; i++) {
+          if (acc[i] === "*") {
+            res.push(curr[i]);
+          } else {
+            res.push(acc[i]);
+          }
+        }
+        return res;
+      }, initial)
+      .join("")
+      .replace(/\*/g, "#");
+    return output;
+  }
 }
 ```
 
@@ -1016,10 +1094,12 @@ function assembleString(array) {
 
 ```js
 function assembleString(array) {
-    return !array.length ? "" : [...array[0]].map((x, i) => {
-        let s = array.find(y => y[i] != "*")
-        return !s ? "#" : s[i]
-    }).join``
+  return !array.length
+    ? ""
+    : [...array[0]].map((x, i) => {
+        let s = array.find((y) => y[i] != "*");
+        return !s ? "#" : s[i];
+      }).join``;
 }
 ```
 
@@ -1027,7 +1107,7 @@ function assembleString(array) {
 
 ### 19. Strip Comments
 
-#### link 
+#### link
 
 [https://www.codewars.com/kata/51c8e37cee245da6b40000bd](https://www.codewars.com/kata/51c8e37cee245da6b40000bd)
 
@@ -1056,7 +1136,10 @@ bananas
 The code would be called like so:
 
 ```js
-var result = solution("apples, pears # and bananas\ngrapes\nbananas !apples", ["#", "!"])
+var result = solution("apples, pears # and bananas\ngrapes\nbananas !apples", [
+  "#",
+  "!",
+]);
 // result should == "apples, pears\ngrapes\nbananas"
 ```
 
@@ -1064,15 +1147,17 @@ var result = solution("apples, pears # and bananas\ngrapes\nbananas !apples", ["
 
 ```js
 function solution(input, markers = []) {
-    const strs = input.split('\n');
-    return strs.map((str) => {
-        let _str = str;
-        markers.forEach((marker) => {
-            const pos = _str.indexOf(marker);
-            _str = _str.slice(0, pos === -1 ? _str.length : pos);
-        })
-        return _str.trim();
-    }).join('\n')
+  const strs = input.split("\n");
+  return strs
+    .map((str) => {
+      let _str = str;
+      markers.forEach((marker) => {
+        const pos = _str.indexOf(marker);
+        _str = _str.slice(0, pos === -1 ? _str.length : pos);
+      });
+      return _str.trim();
+    })
+    .join("\n");
 }
 ```
 
@@ -1080,16 +1165,16 @@ function solution(input, markers = []) {
 
 ```js
 function solution(input, markers = []) {
-    return input.replace(new RegExp(`\\s*[${markers.join('|')}].+`, 'g'), '');
+  return input.replace(new RegExp(`\\s*[${markers.join("|")}].+`, "g"), "");
 }
 ```
-
 
 ---
 
 ### 20. Adding Big Numbers
 
-#### link 
+#### link
+
 [https://www.codewars.com/kata/525f4206b73515bffb000b21/train/javascript](https://www.codewars.com/kata/525f4206b73515bffb000b21/train/javascript)
 
 #### instructions
@@ -1097,7 +1182,6 @@ function solution(input, markers = []) {
 We need to sum big numbers and we require your help.
 
 Write a function that returns the sum of two numbers. The input numbers are strings and the function must return a string.
-
 
 ##### example
 
@@ -1108,7 +1192,7 @@ add("11","99"); -> "110"
 
 ##### notes
 
-- The input numbers are *big*
+- The input numbers are _big_
 - The input is a string of only digits
 - The numbers are positives
 
@@ -1116,41 +1200,44 @@ add("11","99"); -> "110"
 
 ```js
 function add(a, b) {
-    const arrA = a.split("").reverse();
-    const arrB = b.split("").reverse();
-    const lengthA = arrA.length;
-    const lengthB = arrB.length;
-    const rounds = Math.max(lengthA, lengthB);
-    const arrRes = [];
-    let lastCarry = 0;
-    for (let i = 0; i < rounds; i++) {
-        let tempA = i < lengthA ? Number(arrA[i]) : 0;
-        let tempB = i < lengthB ? Number(arrB[i]) : 0;
-        const sum = tempA + tempB + lastCarry;
-        lastCarry = Math.floor(sum / 10);
-        arrRes.push(sum % 10);
-    }
-    if (lastCarry) {
-        arrRes.push(lastCarry)
-    }
-    return arrRes.reverse().join("");
+  const arrA = a.split("").reverse();
+  const arrB = b.split("").reverse();
+  const lengthA = arrA.length;
+  const lengthB = arrB.length;
+  const rounds = Math.max(lengthA, lengthB);
+  const arrRes = [];
+  let lastCarry = 0;
+  for (let i = 0; i < rounds; i++) {
+    let tempA = i < lengthA ? Number(arrA[i]) : 0;
+    let tempB = i < lengthB ? Number(arrB[i]) : 0;
+    const sum = tempA + tempB + lastCarry;
+    lastCarry = Math.floor(sum / 10);
+    arrRes.push(sum % 10);
+  }
+  if (lastCarry) {
+    arrRes.push(lastCarry);
+  }
+  return arrRes.reverse().join("");
 }
 ```
+
 ---
 
 ### 21. Sort binary tree by levels
 
 #### link
+
 [https://www.codewars.com/kata/52bef5e3588c56132c0003bc/train/javascript](https://www.codewars.com/kata/52bef5e3588c56132c0003bc/train/javascript)
 
 #### instructions
 
 You are given a binary tree:
+
 ```js
-class Node { 
+class Node {
   constructor(value, left = null, right = null) {
     this.value = value;
-    this.left  = left;
+    this.left = left;
     this.right = right;
   }
 }
@@ -1171,7 +1258,7 @@ Example 1 - following tree:
 Should return following list:
 
 ```js
-[2,8,9,1,3,4,5]
+[2, 8, 9, 1, 3, 4, 5];
 ```
 
 Example 2 - following tree:
@@ -1186,55 +1273,54 @@ Example 2 - following tree:
 Should return following list:
 
 ```js
-[1,8,4,3,5,7]
+[1, 8, 4, 3, 5, 7];
 ```
 
 #### solution
 
 ```js
 function treeByLevels(tree) {
-    const res = []
-    let depth = 0
-    if (tree === null) {
-        return res
-    }
-    else {
-        (function flatNode(node = tree, dep = depth) {
-            if (node === null) {
-                return
-            }
-            if (node.value !== null) {
-                res.push({ value: node.value, depth: dep })
-            }
-            if (node.left !== null) {
-                flatNode(node.left, dep + 1)
-            }
-            if (node.right !== null) {
-                flatNode(node.right, dep + 1)
-            }
-        })(tree)
+  const res = [];
+  let depth = 0;
+  if (tree === null) {
+    return res;
+  } else {
+    (function flatNode(node = tree, dep = depth) {
+      if (node === null) {
+        return;
+      }
+      if (node.value !== null) {
+        res.push({ value: node.value, depth: dep });
+      }
+      if (node.left !== null) {
+        flatNode(node.left, dep + 1);
+      }
+      if (node.right !== null) {
+        flatNode(node.right, dep + 1);
+      }
+    })(tree);
 
-        return res.sort((a, b) => a.depth - b.depth).map((i) => i.value)
-    }
+    return res.sort((a, b) => a.depth - b.depth).map((i) => i.value);
+  }
 }
 ```
 
 #### the better solution
 
 ```js
-function treeByLevels (rootNode) {
-  if(!rootNode) return []
-  const nodes = [rootNode]
-  const result = []
-  while(nodes.length > 0) {
-    const node = nodes.shift()
-    if(node.left) {
-      nodes.push(node.left)
+function treeByLevels(rootNode) {
+  if (!rootNode) return [];
+  const nodes = [rootNode];
+  const result = [];
+  while (nodes.length > 0) {
+    const node = nodes.shift();
+    if (node.left) {
+      nodes.push(node.left);
     }
-    if(node.right) {
-      nodes.push(node.right)
+    if (node.right) {
+      nodes.push(node.right);
     }
-    result.push(node.value)
+    result.push(node.value);
   }
   return result;
 }
@@ -1243,6 +1329,7 @@ function treeByLevels (rootNode) {
 ### 22. Summarize ranges
 
 #### link
+
 [https://www.codewars.com/kata/55fb6537544ae06ccc0000dc/train/javascript](https://www.codewars.com/kata/55fb6537544ae06ccc0000dc/train/javascript)
 
 #### instructions
@@ -1252,49 +1339,52 @@ Given a sorted array of numbers, return the summary of its ranges.
 #### examples
 
 ```js
-summaryRanges([1, 2, 3, 4]) === ["1->4"]
-summaryRanges([1, 1, 1, 1, 1]) === ["1"]
-summaryRanges([0, 1, 2, 5, 6, 9]) === ["0->2", "5->6", "9"]
-summaryRanges([0, 1, 2, 3, 3, 3, 4, 5, 6, 7]) === ["0->7"]
-summaryRanges([0, 1, 2, 3, 3, 3, 4, 4, 5, 6, 7, 7, 9, 9, 10]) === ["0->7", "9->10"]
-summaryRanges([-2,0, 1, 2, 3, 3, 3, 4, 4, 5, 6, 7, 7, 9, 9, 10, 12]) ===["-2", "0->7", "9->10", "12"]
+summaryRanges([1, 2, 3, 4]) === ["1->4"];
+summaryRanges([1, 1, 1, 1, 1]) === ["1"];
+summaryRanges([0, 1, 2, 5, 6, 9]) === ["0->2", "5->6", "9"];
+summaryRanges([0, 1, 2, 3, 3, 3, 4, 5, 6, 7]) === ["0->7"];
+summaryRanges([0, 1, 2, 3, 3, 3, 4, 4, 5, 6, 7, 7, 9, 9, 10]) ===
+  ["0->7", "9->10"];
+summaryRanges([-2, 0, 1, 2, 3, 3, 3, 4, 4, 5, 6, 7, 7, 9, 9, 10, 12]) ===
+  ["-2", "0->7", "9->10", "12"];
 ```
 
 #### solution
 
 ```js
 function range(arr = []) {
-    if (arr.length === 1, arr[0] === arr[arr.length - 1]) {
-        return arr[0].toString()
-    }
-    else {
-        return [arr[0], arr[arr.length - 1]].join('->')
-    }
+  if ((arr.length === 1, arr[0] === arr[arr.length - 1])) {
+    return arr[0].toString();
+  } else {
+    return [arr[0], arr[arr.length - 1]].join("->");
+  }
 }
 
 function summaryRanges(nums = []) {
-    const result = []
-    let tempArr = []
-    for (let i = 0; i < nums.length; i++) {
-        const current = nums[i]
-        const next = nums[i + 1]
-        tempArr.push(current)
-        if (next === undefined || current + 1 < next) {
-            result.push(range(tempArr))
-            tempArr = []
-        }
+  const result = [];
+  let tempArr = [];
+  for (let i = 0; i < nums.length; i++) {
+    const current = nums[i];
+    const next = nums[i + 1];
+    tempArr.push(current);
+    if (next === undefined || current + 1 < next) {
+      result.push(range(tempArr));
+      tempArr = [];
     }
-    if (tempArr.length) {
-        result.push(range(tempArr))
-    }
-    return result
+  }
+  if (tempArr.length) {
+    result.push(range(tempArr));
+  }
+  return result;
 }
 ```
+
 ---
 
 ### 23. So Many Permutations!
 
 #### link
+
 [https://www.codewars.com/kata/5254ca2719453dcc0b00027d/javascript](https://www.codewars.com/kata/5254ca2719453dcc0b00027d/javascript)
 
 #### instructions
@@ -1304,6 +1394,7 @@ In this kata, your task is to create all permutations of a non-empty input strin
 Create as many "shufflings" as you can!
 
 Examples:
+
 ```
 With input 'a':
 Your function should return: ['a']
@@ -1322,33 +1413,35 @@ Note: The order of the permutations doesn't matter.
 
 Good luck!
 
-
 #### solutions
 
 ```js
 function permutations(str) {
-	if (str.length === 1) { return [str]; }
-	const res = []
-	for (let i = 0; i < str.length; i++) {
-		const curr = str[i]
-		const restStr = str.slice(0, i) + str.slice(i + 1);
-		const remainingPerms = permutations(restStr)
-		for (let j = 0; j < remainingPerms.length; j++) {
-			const currStr = curr + remainingPerms[j]
-			if (res.indexOf(currStr) < 0)
-				res.push(currStr)
-		}
-	}
-	return res
+  if (str.length === 1) {
+    return [str];
+  }
+  const res = [];
+  for (let i = 0; i < str.length; i++) {
+    const curr = str[i];
+    const restStr = str.slice(0, i) + str.slice(i + 1);
+    const remainingPerms = permutations(restStr);
+    for (let j = 0; j < remainingPerms.length; j++) {
+      const currStr = curr + remainingPerms[j];
+      if (res.indexOf(currStr) < 0) res.push(currStr);
+    }
+  }
+  return res;
 }
 ```
 
 ---
+
 ### 24. Simple Fun #120: Range Collapse Representation
 
 #### instructions
 
 ##### Task
+
 A range-collapse representation of an array of integers looks like this: `"1,3-6,8"`, where `3-6` denotes the range from `3-6`, i.e. `[3,4,5,6]`.
 
 Hence `"1,3-6,8"` = `[1,3,4,5,6,8]`. Some other range-collapse representations of `[1,3,4,5,6,8]` include `"1,3-5,6,8", "1,3,4,5,6,8", etc`.
@@ -1360,7 +1453,7 @@ You are given an array arr. Your task is to find the number of different range-c
 Example
 For `arr = [1,3,4,5,6,8]`, the result should be `8`.
 
-  `"1,3-4,5,6,8"  "1,3-4,5-6,8"  "1,3-5,6,8"  "1,3-6,8"  "1,3,4-5,6,8"  "1,3,4-6,8"  "1,3,4,5-6,8"  "1,3,4,5,6,8"`
+`"1,3-4,5,6,8"  "1,3-4,5-6,8"  "1,3-5,6,8"  "1,3-6,8"  "1,3,4-5,6,8"  "1,3,4-6,8"  "1,3,4,5-6,8"  "1,3,4,5,6,8"`
 
 Input/OutPut
 `[input]` integer array `arr`
@@ -1369,33 +1462,31 @@ sorted array of different positive integers.
 `[output]` an integer
 the number of different range-collapse representations of the given array.
 
-
 #### solutions
 
 ```js
 function factorial(n) {
-	if (n <= 1) {
-		return 1
-	}
-	return n * factorial(n - 1)
+  if (n <= 1) {
+    return 1;
+  }
+  return n * factorial(n - 1);
 }
 
 function getCombination(m, n) {
-	return factorial(n) / (factorial(n - m) * factorial(m))
+  return factorial(n) / (factorial(n - m) * factorial(m));
 }
 
 function getRangeResult(arr = []) {
-	if (arr.length === 1) {
-		return 1
-	}
-	else {
-		const gap = arr[arr.length - 1] - arr[0]
-		let count = 0;
-		for (let i = 0; i <= gap; i++) {
-			count += getCombination(i, gap)
-		}
-		return count
-	}
+  if (arr.length === 1) {
+    return 1;
+  } else {
+    const gap = arr[arr.length - 1] - arr[0];
+    let count = 0;
+    for (let i = 0; i <= gap; i++) {
+      count += getCombination(i, gap);
+    }
+    return count;
+  }
 }
 
 // A range string `1-5` can be considered as `1-2-3-4-5` connected with five `-` symbol
@@ -1405,30 +1496,37 @@ function getRangeResult(arr = []) {
 // Finally, don't forget to multiply all the results of range
 
 function descriptions(arr = []) {
-	if (arr.length < 1) {
-		return 0
-	}
-	const result = []
-	// build the ranges
-	let tempArr = []
-	for (let i = 0; i < arr.length; i++) {
-		const current = arr[i]
-		const next = arr[i + 1]
-		tempArr.push(current)
-		if (next === undefined || current + 1 < next) {
-			result.push(getRangeResult(tempArr))
-			tempArr = []
-		}
-	}
-	if (tempArr.length) {
-		result.push(getRangeResult(tempArr))
-	}
-	// end of building the ranges
-	const res = result.reduce((pre, next) => {
-		return pre * next
-	}, 1)
-	return res
+  if (arr.length < 1) {
+    return 0;
+  }
+  const result = [];
+  // build the ranges
+  let tempArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    const current = arr[i];
+    const next = arr[i + 1];
+    tempArr.push(current);
+    if (next === undefined || current + 1 < next) {
+      result.push(getRangeResult(tempArr));
+      tempArr = [];
+    }
+  }
+  if (tempArr.length) {
+    result.push(getRangeResult(tempArr));
+  }
+  // end of building the ranges
+  const res = result.reduce((pre, next) => {
+    return pre * next;
+  }, 1);
+  return res;
 }
+```
+
+#### the better solutions
+
+```js
+const descriptions = (a) =>
+  2 ** a.reduce((x, c, i) => x + Number(a[i + 1] - c === 1), 0);
 ```
 
 ---
