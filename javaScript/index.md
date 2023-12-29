@@ -1292,4 +1292,55 @@ function summaryRanges(nums = []) {
 ```
 ---
 
+### 23. So Many Permutations!
 
+#### link
+[https://www.codewars.com/kata/5254ca2719453dcc0b00027d/javascript](https://www.codewars.com/kata/5254ca2719453dcc0b00027d/javascript)
+
+#### instructions
+
+In this kata, your task is to create all permutations of a non-empty input string and remove duplicates, if present.
+
+Create as many "shufflings" as you can!
+
+Examples:
+```
+With input 'a':
+Your function should return: ['a']
+
+With input 'ab':
+Your function should return ['ab', 'ba']
+
+With input 'abc':
+Your function should return ['abc','acb','bac','bca','cab','cba']
+
+With input 'aabb':
+Your function should return ['aabb', 'abab', 'abba', 'baab', 'baba', 'bbaa']
+```
+
+Note: The order of the permutations doesn't matter.
+
+Good luck!
+
+
+#### solutions
+
+```js
+function permutations(str) {
+	if (str.length === 1) { return [str]; }
+	const res = []
+	for (let i = 0; i < str.length; i++) {
+		const curr = str[i]
+		const restStr = str.slice(0, i) + str.slice(i + 1);
+		const remainingPerms = permutations(restStr)
+		for (let j = 0; j < remainingPerms.length; j++) {
+			const currStr = curr + remainingPerms[j]
+			if (res.indexOf(currStr) < 0)
+				res.push(currStr)
+		}
+	}
+	return res
+}
+```
+
+---
