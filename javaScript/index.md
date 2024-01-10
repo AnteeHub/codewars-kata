@@ -1534,3 +1534,225 @@ const descriptions = array) =>
 ```
 
 ---
+
+### 25. So Many Permutations!
+
+#### link
+
+[https://www.codewars.com/kata/5828b9455421a4a4e8000007/train/javascript](https://www.codewars.com/kata/5828b9455421a4a4e8000007/train/javascript)
+
+#### instructions
+
+Given a certain number, how many multiples of three could you obtain with its digits?
+
+Suposse that you have the number 362. The numbers that can be generated from it are:
+
+```
+362 ----> 3, 6, 2, 36, 63, 62, 26, 32, 23, 236, 263, 326, 362, 623, 632 
+```
+
+But only:
+
+`3, 6, 36, 63` are multiple of three.
+
+We need a function that can receive a number ann may output in the following order:
+
+- the amount of multiples
+
+- the maximum multiple
+
+Let's see a case the number has a the digit 0 and repeated digits:
+
+```
+6063 ----> 0, 3, 6, 30, 36, 60, 63, 66, 306, 360, 366, 603, 606, 630, 636, 660, 663, 3066, 3606, 3660, 6036, 6063, 6306, 6360, 6603, 6630
+```
+In this case the multiples of three will be all except 0
+
+```
+6063 ----> 3, 6, 30, 36, 60, 63, 66, 306, 360, 366, 603, 606, 630, 636, 660, 663, 3066, 3606, 3660, 6036, 6063, 6306, 6360, 6603, 6630
+```
+
+The cases above for the function:
+
+```
+find_mult_3(362) == [4, 63]
+
+find_mult_3(6063) == [25, 6630]
+```
+
+In Javascript `findMult_3()`. The function will receive only positive integers (num > 0), and you don't have to worry for validating the entries.
+
+Features of the random tests:
+
+```
+Number of test = 100
+1000 ≤ num ≤ 100000000
+```
+Enjoy it!!
+
+
+#### solutions
+
+```js
+function getNums(number = 0) {
+  return number.toString().split('').map((numStr) => parseInt(numStr, 10));
+}
+
+function getCombinations(arr = []) {
+  const result = [];
+  function generateCombo(prefix, remaining) {
+    if (prefix !== '') {
+      const res = parseInt(prefix, 10)
+      if (result.indexOf(res) < 0) {
+        result.push(res);
+      }
+    }
+    for (let i = 0; i < remaining.length; i++) {
+      generateCombo(prefix + remaining[i], remaining.slice(0, i).concat(remaining.slice(i + 1)));
+    }
+  }
+  generateCombo('', arr.map(String));
+  return result.sort((a, b) => a - b);
+}
+
+function canMod3(numbers) {
+  const nums = numbers.toString().split('').map((numStr) => parseInt(numStr, 10));
+  const res = nums.reduce((pre, curr) => pre + curr, 0);
+  if (res === 0) {
+    return false;
+  }
+  return res % 3 === 0;
+}
+
+function findMult_3(num) {
+  const result = getCombinations(getNums(num)).filter((i) => canMod3(i));
+  const length = result.length;
+  return [length, result[length - 1]]
+}
+```
+
+#### the better solutions
+
+```js
+function* f(s,r=''){
+  yield +r
+  for (let i=0;i<s.length;i++){
+    yield* f(s.slice(0,i)+s.slice(i+1),r+s[i])
+  }
+}
+
+function findMult_3(n){
+  let s = new Set()
+  for (let p of f(n+'')){
+    if (p && p%3===0) s.add(p)
+  }
+  return [s.size,Math.max(...s)]
+}
+```
+
+---
+
+### 26. The latest clock
+
+#### link
+[https://www.codewars.com/kata/58925dcb71f43f30cd00005f/train/javascript](https://www.codewars.com/kata/58925dcb71f43f30cd00005f/train/javascript)
+
+#### instructions
+
+Write a function which receives 4 digits and returns the latest time of day that can be built with those digits.
+
+The time should be in `HH:MM` format.
+
+Examples:
+```
+digits: 1, 9, 8, 3 => result: "19:38"
+digits: 9, 1, 2, 5 => result: "21:59" ("19:25" is also a valid time, but 21:59 is later)
+```
+
+Notes
+- Result should be a valid 24-hour time, between `00:00` and `23:59`.
+- Only inputs which have valid answers are tested.
+
+#### solutions
+
+```js
+function permutations(str) {
+    if (str.length === 1) {
+        return [str];
+    }
+    const res = [];
+    for (let i = 0; i < str.length; i++) {
+        const curr = str[i];
+        const restStr = str.slice(0, i) + str.slice(i + 1);
+        const remainingPerms = permutations(restStr);
+        for (let j = 0; j < remainingPerms.length; j++) {
+            const currStr = curr + remainingPerms[j];
+            if (res.indexOf(currStr) < 0) res.push(currStr);
+        }
+    }
+    return res;
+}
+
+function latestClock(a, b, c, d) {
+    const [clock] = permutations(`${a}${b}${c}${d}`).sort((a, b) => parseInt(b, 10) - parseInt(a, 10)).filter((str) => {
+        const [hour1, hour2, minite1] = str.split('').map((i) => parseInt(i, 10))
+        if (hour1 > 2) {
+            return false
+        }
+        if (hour1 === 2 && hour2 > 3) {
+            return false
+        }
+        if (minite1 > 5) {
+            return false
+        }
+        return true
+    })
+    return `${clock[0]}${clock[1]}:${clock[2]}${clock[3]}`
+}
+```
+
+#### the better solutions
+
+```js
+
+// smart but not clean XD
+
+function latestClock(a, b, c, d) {
+  const times = [
+    `${a}${b}:${c}${d}`,
+    `${a}${b}:${d}${c}`,
+    `${a}${c}:${b}${d}`,
+    `${a}${c}:${d}${b}`,
+    `${a}${d}:${b}${c}`,
+    `${a}${d}:${c}${b}`,
+    `${b}${a}:${c}${d}`,
+    `${b}${a}:${d}${c}`,
+    `${b}${c}:${a}${d}`,
+    `${b}${c}:${d}${a}`,
+    `${b}${d}:${a}${c}`,
+    `${b}${d}:${c}${a}`,
+    `${c}${a}:${b}${d}`,
+    `${c}${a}:${d}${b}`,
+    `${c}${b}:${a}${d}`,
+    `${c}${b}:${d}${a}`,
+    `${c}${d}:${a}${b}`,
+    `${c}${d}:${b}${a}`,
+    `${d}${a}:${b}${c}`,
+    `${d}${a}:${c}${b}`,
+    `${d}${b}:${a}${c}`,
+    `${d}${b}:${c}${a}`,
+    `${d}${c}:${a}${b}`,
+    `${d}${c}:${b}${a}`,
+  ];
+  const time = times.filter(el => {
+    const test = el.split(":")
+    if (test[0] >= 24) return false
+    if (test[1] >= 60) return false
+    return true
+  })
+  time.sort((a, b) =>  (b.split(":")[0] - a.split(":")[0] || b.split(":")[1] - a.split(":")[1]))
+  return time[0]
+}
+
+```
+---
