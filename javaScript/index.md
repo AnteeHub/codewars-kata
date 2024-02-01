@@ -1819,10 +1819,100 @@ Have fun :)
 
 ```javascript
 
-function justify(text, width) {
-  // Your code goes here
-  return text
+function justify(text = "", width) {
+  const arr = text.split(" ") || [];
+  let result = "";
+  let prevLinesArr = [];
+  let prevTotal = 0;
+
+
+  for (let i = 0; i < arr.length; i++) {
+    const currItem = arr[i]
+    const currWordLength = currItem.length;
+
+    if (prevTotal + currWordLength + prevLinesArr.length > width) {
+      result += `${alignSingleLine(prevLinesArr, width, prevTotal)}\n`;
+      prevLinesArr = [currItem]
+      prevTotal = currItem.length
+    } else {
+      prevLinesArr.push(arr[i])
+      prevTotal += currWordLength
+    }
+  }
+  if (prevLinesArr.length) {
+    result += `${prevLinesArr.join(' ')}`;
+  }
+
+  return result;
 }
 
+function alignSingleLine(arr, width = 0, total = 0) {
+  const gapCount = arr.length - 1;
+  if (total === 0 || gapCount === 0) {
+    return arr[0].toString();
+  }
+  if (total + gapCount > width) {
+    return "";
+  }
+
+  const baseGap = Math.floor((width - total) / gapCount);
+  const remainGaps = (width - total) % gapCount;
+
+  const gapArr = Array(gapCount).fill(baseGap);
+
+  for (
+    let i = 0, remainGapsCount = remainGaps;
+    i < gapArr.length;
+    i++, remainGapsCount--
+  ) {
+    if (remainGapsCount === 0) {
+      break;
+    }
+    gapArr[i] = gapArr[i] + 1;
+  }
+  let result = ""
+  arr.forEach((item, index) => {
+    if (index === arr.length - 1) {
+      result += item.toString()
+    }
+    else {
+      const gapStr = ' '.repeat(gapArr[index])
+      result += (item + gapStr)
+    }
+  })
+  return result
+}
+
+```
+
+#### the better solutions
+
+```javascript
+/**
+ * @param {String} str - inital string
+ * @param {Number} len - line length
+ */
+function justify(str, len) {
+  var words = str.split(' ');
+  var lines = [];
+  var lastLine = words.reduce(function(line, word) {
+    if (line) {
+      if (line.length + word.length + 1 <= len)
+        return line + ' ' + word;
+      lines.push(line);
+    }
+    return word;
+  });
+  lines = lines.map(function(line) {
+    if (line.indexOf(' ') >= 0)
+      for (var lineLen = line.length; lineLen < len; )
+        line = line.replace(/ +/g, function(spaces) {
+          return spaces + (lineLen++ < len ? ' ' : '');
+        });
+    return line;
+  });
+  lastLine && lines.push(lastLine);
+  return lines.join('\n');
+}
 ```
 
